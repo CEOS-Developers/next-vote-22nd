@@ -10,7 +10,7 @@ export default function voteHeader() {
 
     return (
         <div className=" w-full flex flex-col items-center">
-            <div className={"flex mt-[32px] w-[149px] h-[78px] bg-white border-[2px] border-black justify-end items-center"}>
+            <div className={"flex mt-[58px] w-[149px] h-[78px] bg-white border-[2px] border-black justify-end items-center"}>
                 <div className="w-[70px] h-[42px] flex flex-col font-bold text-[10px] text-black ml-[17px] mr-auto ">
                     <span className="h-[12px]">
                         데모데이 투표
