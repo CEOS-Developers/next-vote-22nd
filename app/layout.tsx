@@ -33,7 +33,7 @@ export default function RootLayout({
         {/* 공통 wrapper */}
         <div className="min-h-screen flex justify-center">
           {/* 모바일/웹앱 고정 폭 */}
-          <div className="w-[375px] bg-yellow min-h-screen overflow-x-hidden border rounded-xl shadow">
+          <div className="max-w-[375px] w-full bg-yellow min-h-screen overflow-x-hidden shadow-2xl">
             {children}
           </div>
         </div>
