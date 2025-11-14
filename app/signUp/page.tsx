@@ -27,9 +27,22 @@ export default function SignUp() {
         <label className="text-sm">Email</label>
         <Input type="text" placeholder="Email" />
       </div>
-      <div className="flex flex-col font-normal">
-        <label className="text-sm">Team/Part</label>
-        <Input type="text" placeholder="Team" />
+      <div className="font-normal flex flex-col w-80">
+        <label>Team/Part</label>
+        <p className='flex flex-row gap-8'>
+        <select className='border-b-3 border-brown w-30 mb-4 py-2 focus:outline-none text-lg'>
+          <option>Team A</option>
+          <option>Team B</option>
+          <option>Team C</option>
+          <option>Team D</option>
+        </select>
+        <select className='border-b-3 border-brown w-30 mb-4 py-2 focus:outline-none text-lg'>
+          <option>Part A</option>
+          <option>Part B</option>
+          <option>Part C</option>
+          <option>Part D</option>
+        </select>
+        </p>
       </div>
       <BlackButton onClick={() => { window.location.href = '/login'; }}>
         Sign up
