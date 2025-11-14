@@ -1,3 +1,5 @@
+"use client";
+import BlackButton from "@/components/BlackButton";
 import Image from "next/image";
 
 export default function Home() {
@@ -11,8 +13,10 @@ export default function Home() {
         <Image src="/vote.svg" alt="logo" width={150} height={150}/>
       </div>
       <div className="flex flex-col gap-4">
-<button className="bg-black text-white rounded-xl w-40 h-10 text-lg font-normal cursor-pointer shadow-lg hover:bg-yellow">join us</button>
-<button className="text-black underline cursor-pointer">sign up as a member</button></div>
+          <BlackButton onClick={() => {
+          window.location.href = "/login";
+        }}>join us</BlackButton>
+      <button className="text-black underline cursor-pointer">sign up as a member</button></div>
     </div>
   );
 }
