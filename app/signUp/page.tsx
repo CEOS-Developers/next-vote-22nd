@@ -1,21 +1,39 @@
+"use client";
+import BlackButton from '@/components/BlackButton';
+import Header from '@/components/Header';
+import Input from '@/components/Input';
 
 export default function SignUp() {
   return (
-    <div className="relative w-full h-screen flex flex-col items-center">
-        <div>Register</div>
-         <div>Name
-        <input type="text" placeholder="Username" className="border border-gray-300 rounded-md px-4 py-2 w-80 mb-4"/></div>
-        <div>ID
-        <input type="text" placeholder="Username" className="border border-gray-300 rounded-md px-4 py-2 w-80 mb-4"/></div>
-        <div>Password
-        <input type="password" placeholder="Password" className="border border-gray-300 rounded-md px-4 py-2 w-80 mb-4"/></div>
-        <div>Password Confirm
-        <input type="password" placeholder="Password" className="border border-gray-300 rounded-md px-4 py-2 w-80 mb-4"/></div>
-        <div>Email
-        <input type="text" placeholder="Email" className="border border-gray-300 rounded-md px-4 py-2 w-80 mb-4"/></div>
-        <div>Team/Part
-        <input type="" className="border border-gray-300 rounded-md px-4 py-2 w-80 mb-4"/></div>
-        <button className="bg-black text-white rounded-xl w-40 h-10 text-lg font-normal cursor-pointer shadow-lg hover:bg-yellow">Login</button>
+    <div className="relative w-full h-screen flex flex-col items-center justify-center">
+      <Header>Register</Header>
+      <div className="flex flex-col font-normal">
+        <label className="text-sm">Name</label>
+        <Input type="text" placeholder="Name" />
+      </div>
+      <div className="flex flex-col font-normal">
+        <label className="text-sm">ID</label>
+        <Input type="text" placeholder="ID" />
+      </div>
+      <div className="flex flex-col font-normal">
+        <label className="text-sm">Password</label>
+        <Input type="password" placeholder="Password" />
+      </div>
+      <div className="flex flex-col font-normal">
+        <label className="text-sm">Password Confirm</label>
+        <Input type="password" placeholder="Password" />
+      </div>
+      <div className="flex flex-col font-normal">
+        <label className="text-sm">Email</label>
+        <Input type="text" placeholder="Email" />
+      </div>
+      <div className="flex flex-col font-normal">
+        <label className="text-sm">Team/Part</label>
+        <Input type="text" placeholder="Team" />
+      </div>
+      <BlackButton onClick={() => { window.location.href = '/login'; }}>
+        Sign up
+      </BlackButton>
     </div>
   );
 }
