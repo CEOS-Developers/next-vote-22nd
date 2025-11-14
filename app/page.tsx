@@ -10,7 +10,7 @@ export default function Home() {
         <span className="text-black font-bold text-3xl text-shadow-lg text-right">
           CEOS <br /> Election
         </span>
-        <Image src="/vote.svg" alt="logo" width={150} height={150} />
+        <Image src="/vote.svg" alt="logo" width={150} height={150} loading="eager"/>
       </div>
       <div className="flex flex-col gap-4">
         <BlackButton
