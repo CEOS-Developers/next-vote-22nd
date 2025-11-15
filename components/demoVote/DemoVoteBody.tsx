@@ -4,7 +4,7 @@ import Image from 'next/image';
 import checkIcon from '@/public/icons/check.svg';
 import Link from 'next/link';
 
-export default function VoteHeader() {
+export default function DemoVoteBody() {
   //각 버튼 하니씩
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
