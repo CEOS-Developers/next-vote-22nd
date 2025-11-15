@@ -1,0 +1,12 @@
+<svg width="80" height="160" viewBox="0 0 80 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <g transform="rotate(180 40 80)">
+        <!-- 세로 줄 -->
+        <line x1="40" y1="150" x2="40" y2="40" stroke="black" stroke-width="8" stroke-linecap="round"/>
+
+        <!-- 왼쪽 대각선 -->
+        <line x1="40" y1="40" x2="10" y2="75" stroke="black" stroke-width="8" stroke-linecap="round"/>
+
+        <!-- 오른쪽 대각선 -->
+        <line x1="40" y1="40" x2="70" y2="75" stroke="black" stroke-width="8" stroke-linecap="round"/>
+    </g>
+</svg>

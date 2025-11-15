@@ -5,11 +5,21 @@
   --foreground: #171717;
 }
 
+
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+    --color-yellow: #FFD954;
+    --color-brown: #6B6758;
+}
+
+@theme {
+  --color-yellow: #FFD954;
+  --color-brown: #6B6758;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -19,22 +29,62 @@
   }
 }
   
-  @font-face {
+@font-face {
     font-family: 'Pretendard';
     src: url('/fonts/Pretendard-Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
-  }
+}
 
-  @font-face {
+@font-face {
     font-family: 'Pretendard';
     src: url('/fonts/Pretendard-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
-  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: 'Pretendard',sans-serif;
   font-weight: 500;
+}
+
+@keyframes arrowHide {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes ballotDrop {
+    from { top: 1.5rem; }    /* top-6 */
+    to   { top: 8.5rem; }   /* 적당히 조절 */
+}
+
+.ballot-drop {
+    animation: ballotDrop 1.7s 0.3s ease-in-out forwards;
+}
+
+@keyframes toYellowBg {
+    0% {
+        background-color: #d1d5db;
+    }
+    100% {
+        background-color: #ffd954;
+    }
+}
+
+.buttonChange {
+    animation: toYellowBg 0.3s ease-in-out 2s forwards;
+
+.text-shadow-xs {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.text-shadow-sm {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow-lg {
+    text-shadow: 4px 4px 6px rgba(0, 0, 0, 0.5);
+}
 }
