@@ -12,7 +12,7 @@ type Props = {
 
 export function DemoCandidateList({ candidates, selectedId, onSelect }: Props) {
   return (
-    <div className="w-full flex flex-col items-center gap-[20px] mt-[12px] px-[16px]">
+    <div className="w-full flex flex-col items-center gap-[25px] mt-[30px] px-[16px]">
       {candidates.map((candidate) => (
         <DemoCandidateCard
           key={candidate.id}
