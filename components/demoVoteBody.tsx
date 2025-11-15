@@ -2,15 +2,16 @@
 import { useState } from "react";
 import Image from "next/image";
 import checkIcon from "../app/public/icons/check.svg";
+import Link from 'next/link';
 
-export default function voteHeader() {
+export default function VoteHeader() {
     //각 버튼 하니씩
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
 
     return (
         <div className=" w-full flex flex-col items-center">
-            <div className={"flex mt-[58px] w-[149px] h-[78px] bg-white border-[2px] border-black justify-end items-center"}>
+            <Link href={'/demoDayVote'} className={"flex mt-[58px] w-[149px] h-[78px] bg-white border-[2px] border-black justify-end items-center"}>
                 <div className="w-[70px] h-[42px] flex flex-col font-bold text-[10px] text-black ml-[17px] mr-auto ">
                     <span className="h-[12px]">
                         데모데이 투표
@@ -29,7 +30,7 @@ export default function voteHeader() {
                         결과보기
                     </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 }

@@ -41,7 +41,7 @@ export default function voteHeader({ title, blackDot, backBtn }: partDemoVotePro
                 </div>
             </div>
 
-            <div className="flex w-full justify-center items-center mt-[18px] mb-[17px]">
+            <div className="flex w-full justify-center items-center mt-[19px]">
                 {backBtn && (
                     <div className="w-[20px] h-[20px] ml-[12px] mr-auto cursor-pointer"
                          onClick={() => router.back()}>
@@ -52,7 +52,7 @@ export default function voteHeader({ title, blackDot, backBtn }: partDemoVotePro
                     { title }
                 </div>
             </div>
-            <Image src={bar} alt="bar" />
+            <Image src={bar} alt="bar" className={"mt-[16px]"} />
         </div>
     );
 }

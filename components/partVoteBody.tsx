@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import checkIcon from "@/app/public/icons/check.svg";
-export default function voteHeader() {
+export default function VoteHeader() {
     //각 버튼 하니씩
     const [checked1, setChecked1] = useState(false);
     const [checked2, setChecked2] = useState(false);
@@ -11,7 +12,7 @@ export default function voteHeader() {
 
     return (
         <div className="w-full flex flex-col items-center">
-            <div className={"flex mt-[32px] w-[149px] h-[78px] bg-white border-[2px] border-black justify-end items-center"}>
+            <Link href={'/feVote'} className={"flex mt-[32px] w-[149px] h-[78px] bg-white border-[2px] border-black justify-end items-center"}>
                 <div className="w-[70px] h-[42px] flex flex-col font-bold text-[10px] text-black ml-[17px] mr-auto ">
                     <span className="h-[12px]">
                         FRONT-END
@@ -33,9 +34,9 @@ export default function voteHeader() {
                         결과보기
                     </div>
                 </div>
-            </div>
+            </Link>
 
-            <div className={"flex mt-[13px] w-[149px] h-[78px] bg-white border-[2px] border-black justify-end items-center"}>
+            <Link href={'/beVote'} className={"flex mt-[13px] w-[149px] h-[78px] bg-white border-[2px] border-black justify-end items-center"}>
                 <div className="w-[70px] h-[42px] flex flex-col font-bold text-[10px] text-black ml-[17px] mr-auto ">
                     <span className="h-[12px]">
                         BACK-END
@@ -57,7 +58,7 @@ export default function voteHeader() {
                         결과보기
                     </div>
                 </div>
-            </div>
+            </Link>
         </div>
     );
 }
