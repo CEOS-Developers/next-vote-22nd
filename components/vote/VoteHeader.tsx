@@ -1,3 +1,5 @@
+'use client';
+
 import bar from '@/public/icons/bar.svg';
 import Image from 'next/image';
 import backIcon from '@/public/icons/back.svg';
