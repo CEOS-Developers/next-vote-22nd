@@ -12,7 +12,7 @@ type Props = {
 
 export function PartCandidateList({ candidates, selectedId, onSelect }: Props) {
   return (
-    <div className="grid grid-cols-2 gap-x-[17px] gap-y-[6px] mt-[6px]">
+    <div className="grid grid-cols-2 gap-x-[35px] gap-y-[16px] mt-[18px]">
       {candidates.map((candidate) => (
         <PartCandidateCard
           key={candidate.id}

@@ -49,8 +49,8 @@ export default function SubmitBtn({ selectedId, position }: Props) {
   return (
     <button
       onClick={handleClick}
-      className="w-[77px] h-[23px] rounded-full bg-[#D9D9D9] border-[0.8px] border-black text-[10px]
-      text-black font-bold flex items-center justify-center hover:bg-yellow-300 mt-[16px]">
+      className="w-[150px] h-[40px] rounded-full bg-[#D9D9D9] border-[2.1px] border-black text-[14px]
+      text-black font-bold flex items-center justify-center hover:bg-yellow-300 mt-[26px]">
       제출하기
     </button>
   );
