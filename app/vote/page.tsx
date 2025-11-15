@@ -1,3 +1,4 @@
+
 'use client';
 import VoteMainHeader from "@/components/voteMainHeader";
 import VoteBody from "@/components/voteBody";
