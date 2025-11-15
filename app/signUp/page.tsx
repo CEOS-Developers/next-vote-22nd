@@ -29,7 +29,7 @@ export default function SignUp() {
         </select>
         </p>
       </div>
-      <BlackButton onClick={() => { window.location.href = '/login'; }}>
+      <BlackButton onClick={() => { window.location.href = '/'; }}>
         Sign up
       </BlackButton>
     </div>

@@ -18,7 +18,7 @@ export default function Login() {
   const handleLogin = () => {
     if (id === dummyUser.id && password === dummyUser.password) {
       alert("로그인 성공!");
-      window.location.href = "/";
+      window.location.href = "/vote";
     } else {
       alert("ID 또는 비밀번호가 올바르지 않습니다.");
     }
@@ -34,9 +34,9 @@ export default function Login() {
     <div className="relative w-full h-screen flex flex-col items-center justify-center gap-5">
       <Header>Login</Header>
       <form
-  onSubmit={(e) => {
-    e.preventDefault(); // 페이지 리로드 방지
-    handleLogin();
+      onSubmit={(e) => {
+      e.preventDefault(); // 페이지 리로드 방지
+      handleLogin();
   }}
   className="flex flex-col items-center gap-5"
 >
