@@ -1,8 +1,8 @@
 // components/demoCandidateList.tsx
-"use client";
+'use client';
 
-import type { candidateResponse } from "@/types/vote";
-import { DemoCandidateCard } from "@/components/demoCandidateCard";
+import type { candidateResponse } from '@/types/vote';
+import DemoCandidateCard from '@/components/demoVote/DemoCandidateCard';
 
 type Props = {
   candidates: candidateResponse[];
@@ -10,7 +10,7 @@ type Props = {
   onSelect: (id: string) => void;
 };
 
-export function DemoCandidateList({ candidates, selectedId, onSelect }: Props) {
+export default function DemoCandidateList({ candidates, selectedId, onSelect }: Props) {
   return (
     <div className="w-full flex flex-col items-center gap-[25px] mt-[30px] px-[16px]">
       {candidates.map((candidate) => (

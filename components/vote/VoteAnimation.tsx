@@ -1,10 +1,9 @@
 // components/VoteSubmitAnimation.tsx
-"use client";
+'use client';
 
-import Image from "next/image";
-import ballot from "@/app/public/icons/ballot.svg";
-import Box from "@/app/public/icons/box";
-
+import Image from 'next/image';
+import ballot from '@/public/icons/ballot.svg';
+import Box from '@/public/icons/box';
 
 export default function VoteAnimation() {
   return (
@@ -22,9 +21,7 @@ export default function VoteAnimation() {
       </div>
 
       <div className="buttonChange w-[180px] h-[50px] rounded-full mb-[80px] bg-gray-300 border-black border-[2.3px] mt-auto">
-        <span className="flex justify-center mt-[10px] text-black text-[16px] font-bold">
-          결과보기
-        </span>
+        <span className="flex justify-center mt-[10px] text-black text-[16px] font-bold">결과보기</span>
       </div>
 
       {/* 애니메이션 정의 */}
