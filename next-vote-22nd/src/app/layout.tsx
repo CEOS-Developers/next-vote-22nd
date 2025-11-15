@@ -1,10 +1,10 @@
 // app/layout.tsx
-import "@/styles/globals.css";
-import type { Metadata } from "next";
+import '@/styles/globals.css';
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/favicon.ico",
+    icon: '/ceos-favicon-1.ico',
   },
 };
 
