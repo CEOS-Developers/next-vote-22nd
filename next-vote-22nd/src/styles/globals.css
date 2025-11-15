@@ -1,3 +1,5 @@
+/* src/styles/globals.css */
+
 @import "tailwindcss";
 
 /* ---------------------------------------------------
@@ -7,6 +9,9 @@
 :root {
   --background: #ffeef6;
   --foreground: #000000;
+}
+
+@theme {
   --color-black: #000a19;
   --color-white: #ffffff;
   /*-------- main color ---------*/
@@ -25,17 +30,43 @@
   --color-gray-700: #4e4d4d;
   --color-gray-800: #302f2f;
   --color-gray-900: #100f0f;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /*------ 폰트 -------*/
+  --font-sans: InterVariable, sans-serif;
+  --font-sans--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+@layer components {
+  .frame-iphone-16 {
+    aspect-ratio: 9 / 19.5;
+    width: 100%;
+    max-width: 20rem;
+    border-radius: 48px;
+    background-color: var(--color-white);
+    box-shadow: 8px 8px 16px var(--color-gray-400);
+  }
+}
+
+@media (min-width: 640px) {
+  .frame-iphone-16 {
+    max-width: 24rem; /* 384px */
+  }
+}
+
+.text-headline-01 {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.text-headline-02 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 20px;
+  text-align: center;
 }
