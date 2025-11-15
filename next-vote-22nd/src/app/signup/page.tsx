@@ -37,6 +37,8 @@ export default function SignupPage() {
           {/* Header with Back Button and Register */}
           <div className="flex items-center gap-4 mb-12">
             <Link href="/?skipSplash=true">
+              {/* splash 페이지가 또 나오지 않도록  */}
+
               <img
                 src="/icons/main/back.svg"
                 alt="Back"
