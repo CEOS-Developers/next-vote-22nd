@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PartCandidateList } from '@/components/partVote/PartCandidateList';
+import PartCandidateList from '@/components/partVote/PartCandidateList';
 import { mockPartCandidates } from '@/lib/mockCandidates';
 import VoteHeader from '@/components/vote/VoteHeader';
 import SubmitBtn from '@/components/SubmitBtn';

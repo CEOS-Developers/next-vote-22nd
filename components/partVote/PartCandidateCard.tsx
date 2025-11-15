@@ -6,7 +6,7 @@ type Props = {
   selected: boolean;
   onSelect: () => void;
 };
-export function PartCandidateCard({ candidate, selected, onSelect }: Props) {
+export default function PartCandidateCard({ candidate, selected, onSelect }: Props) {
   return (
     <div
       onClick={onSelect}
