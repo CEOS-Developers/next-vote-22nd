@@ -1,9 +1,11 @@
 'use client';
+
 import BlackButton from '@/components/BlackButton';
 import Image from 'next/image';
 
-export default function Home() {
+export default function Vote() {
   return (
+
     <div className="relative w-full h-screen flex flex-col items-center justify-between pt-50 pb-30">
       {/* 이미지와 텍스트를 좌우로 배치 */}
       <div className="w-90 px-8 flex items-between flex-col overflow-hidden gap-4">
