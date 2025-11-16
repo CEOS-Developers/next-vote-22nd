@@ -19,7 +19,7 @@ export default function Vote() {
             window.location.href = '/auth/login';
           }}
         >
-          join us
+          join us!
         </BlackButton>
         <button
           className="text-black underline cursor-pointer"
