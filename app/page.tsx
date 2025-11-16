@@ -16,7 +16,7 @@ export default function Vote() {
       <div className="flex flex-col gap-4">
         <BlackButton
           onClick={() => {
-            window.location.href = '/login';
+            window.location.href = '/auth/login';
           }}
         >
           join us
@@ -24,7 +24,7 @@ export default function Vote() {
         <button
           className="text-black underline cursor-pointer"
           onClick={() => {
-            window.location.href = '/signUp';
+            window.location.href = '/auth/signUp';
           }}
         >
           sign up as a member
