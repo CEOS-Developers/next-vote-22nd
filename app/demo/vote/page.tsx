@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import DemoCandidateList from '@/components/demoVote/DemoCandidateList';
-import { MockTeamCandidates } from '@/lib/MockTeamCandidates';
+import { MockTeamCandidates } from '@/lib';
 import VoteHeader from '@/components/vote/VoteHeader';
 import SubmitButton from '@/components/SubmitButton';
 
