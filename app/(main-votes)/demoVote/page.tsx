@@ -1,6 +1,6 @@
 'use client';
 
-import VoteHeader from '@/components/vote/VoteHeader';
+import VoteHeader from '@/app/(main-votes)/vote/VoteHeader';
 import DemoVoteBody from '@/components/demoVote/DemoVoteBody';
 
 export default function demoVote() {

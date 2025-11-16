@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import DemoCandidateList from '@/components/demoVote/DemoCandidateList';
 import { MockTeamCandidates } from '@/lib/MockTeamCandidates';
-import VoteHeader from '@/components/vote/VoteHeader';
+import VoteHeader from '@/app/(main-votes)/vote/VoteHeader';
 import SubmitButton from '@/components/SubmitButton';
 
 export default function DemoDayVotePage() {
