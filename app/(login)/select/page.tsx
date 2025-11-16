@@ -1,6 +1,6 @@
 'use client';
-import VoteMainHeader from '@/app/(main-votes)/vote/VoteMainHeader';
-import VoteBody from '@/app/(main-votes)/vote/VoteBody';
+import VoteMainHeader from '@/components/vote/VoteMainHeader';
+import VoteBody from '@/components/vote/VoteBody';
 
 export default function Select() {
   return (

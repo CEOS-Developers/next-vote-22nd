@@ -1,7 +1,7 @@
 'use client';
 
-import VoteHeader from '@/app/(main-votes)/vote/VoteHeader';
-import VoteAnimation from '@/app/(main-votes)/vote/VoteAnimation';
+import VoteHeader from '@/components/vote/VoteHeader';
+import VoteAnimation from '@/components/vote/VoteAnimation';
 
 export default function BeVoteAnimation() {
   return (

@@ -1,6 +1,6 @@
 'use client';
 
-import VoteHeader from '@/app/(main-votes)/vote/VoteHeader';
+import VoteHeader from '@/components/vote/VoteHeader';
 import PartVoteBody from '@/components/partVote/PartVoteBody';
 
 export default function Vote() {

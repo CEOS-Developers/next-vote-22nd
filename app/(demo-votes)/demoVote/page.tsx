@@ -1,9 +1,9 @@
 'use client';
 
-import VoteHeader from '@/app/(main-votes)/vote/VoteHeader';
+import VoteHeader from '@/components/vote/VoteHeader';
 import DemoVoteBody from '@/components/demoVote/DemoVoteBody';
 
-export default function demoVote() {
+export default function DemoVotePage() {
   return (
     <main className="relative w-full h-screen  w-[375px] flex flex-col bg-[#FFD954]">
       <section className="flex flex-1 flex-col items-center">
