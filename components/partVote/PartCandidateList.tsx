@@ -1,7 +1,7 @@
 'use client';
 
 import type { candidateResponse } from '@/types/vote';
-import PartCandidateCard from '@/components/partVote/PartCandidateCard';
+import PartCandidateCard from './PartCandidateCard';
 
 type Props = {
   candidates: candidateResponse[];

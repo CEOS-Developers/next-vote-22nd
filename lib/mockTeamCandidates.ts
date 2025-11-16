@@ -1,6 +1,6 @@
 import { candidateResponse } from '@/types/vote';
 
-export const mockTeamCandidates: candidateResponse[] = [
+export const MockTeamCandidates: candidateResponse[] = [
   { id: '1', name: 'Repick', teamName: 'Repick' },
   { id: '3', name: 'Dan-support', teamName: 'support' },
   { id: '4', name: 'BariBari', teamName: 'BariBari' },
