@@ -10,7 +10,7 @@ export default function VoteBody() {
 
   return (
     <div className=" w-full flex flex-col items-center font-bold">
-      <Link href="/partVote" className="w-full flex justify-center">
+      <Link href="/part/start" className="w-full flex justify-center">
         <div
           className={'flex mt-[50px] w-[300px] h-[91px] bg-white border-[4px] border-black justify-end items-center'}
           onClick={() => setChecked1(!checked1)}
@@ -25,7 +25,7 @@ export default function VoteBody() {
         </div>
       </Link>
 
-      <Link href="/demoVote" className="w-full flex justify-center">
+      <Link href="/demo/start" className="w-full flex justify-center">
         <div
           className={'flex mt-[50px] w-[300px] h-[91px] bg-white border-[4px] border-black justify-end items-center'}
           onClick={() => setChecked2(!checked2)}

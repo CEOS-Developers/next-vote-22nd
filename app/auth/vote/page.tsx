@@ -13,7 +13,7 @@ export default function vote() {
       <div className="flex flex-col gap-4">
         <BlackButton
           onClick={() => {
-            window.location.href = '/vote/select';
+            window.location.href = '/auth/select';
           }}
         >
           Start

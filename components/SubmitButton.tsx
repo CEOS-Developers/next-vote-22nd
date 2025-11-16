@@ -32,9 +32,9 @@ export default function SubmitBtn({ selectedId, position }: Props) {
 
       //파트에 따라 라우팅 경로 결정 후 라우팅
       const path = {
-        voterFE: '/partVote/feVote/feVoteAnimation',
-        voterBE: '/partVote/beVote/beVoteAnimation',
-        member: '/demoVote/demoDayVote/demoVoteAnimation',
+        voterFE: '/part/feVote/feVoteAnimation',
+        voterBE: '/part/beVote/beVoteAnimation',
+        member: '/demo/vote/demoVoteAnimation',
       } as const;
       router.push(path[position]);
 
