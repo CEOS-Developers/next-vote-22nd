@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import SmallBox from "@/components/box/SmallBox";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 const steps = [1, 2, 3];
@@ -22,7 +22,7 @@ const initialCandidates: Candidate[] = [
   { team: "GroomEasy", name: "GroomEasy", isSelect: false },
 ];
 
-export default function DemoDayStep2Page() {
+const DemoDayStep2Content = () => {
   const searchParams = useSearchParams();
   const pageTitle = searchParams.get("title") ?? "-";
   const [candidates, setCandidates] = useState<Candidate[]>(initialCandidates);
@@ -86,5 +86,13 @@ export default function DemoDayStep2Page() {
         </button>
       </div>
     </main>
+  );
+};
+
+export default function DemoDayStep2Page() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[var(--color-main-extra-light)]" />}>
+      <DemoDayStep2Content />
+    </Suspense>
   );
 }
