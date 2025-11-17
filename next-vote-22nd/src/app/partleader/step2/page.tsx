@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import SmallBox from "@/components/box/SmallBox";
 import { useState } from "react";
