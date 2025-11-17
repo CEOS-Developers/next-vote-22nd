@@ -63,7 +63,7 @@ export default function PartLeaderStep2Page() {
           <div className="flex w-full items-center gap-12">
             <Link
               href="/partleader/step1"
-              aria-label="이전 단계로 이동"
+              aria-label="이전으로 이동"
               className="text-3xl text-black transition-colors hover:text-[var(--color-main)]"
             >
               ←
