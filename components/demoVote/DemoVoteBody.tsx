@@ -12,7 +12,7 @@ export default function DemoVoteBody() {
   return (
     <div className=" w-full flex flex-col items-center">
       <Link
-        href={'demoVote/demoDayVote'}
+        href={'/demo/vote'}
         className={'flex mt-[100px] w-[300px] h-[165px] bg-white border-[4px] border-black justify-end items-center'}
       >
         <div className="flex flex-col font-bold text-[20px] text-black ml-[40px] mb-[60px] mr-auto ">
