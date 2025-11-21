@@ -44,13 +44,6 @@ function HomeContent() {
         >
           Sign up as a member
         </Link>
-        {/* 테스트용 라우팅, 로그인 구현 후 삭제 */}
-        <Link
-          href="/electionSelect"
-          className="mt-[19px] text-[19px] text-[var(--color-black)] underline cursor-pointer"
-        >
-          Test
-        </Link>
       </div>
     </div>
   );
