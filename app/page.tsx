@@ -2,10 +2,12 @@
 
 import BlackButton from '@/components/BlackButton';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(false);
+  const router = useRouter();
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-between pt-50 pb-30">
       {/* 이미지와 텍스트를 좌우로 배치 */}
@@ -28,7 +30,7 @@ export default function Home() {
           <>
             <BlackButton
               onClick={() => {
-                window.location.href = '/auth/login';
+                router.push('/auth/login');
               }}
             >
               join us!
@@ -36,7 +38,7 @@ export default function Home() {
             <button
               className="text-black underline cursor-pointer"
               onClick={() => {
-                window.location.href = '/auth/signUp';
+                router.push('/auth/signUp');
               }}
             >
               sign up as a member

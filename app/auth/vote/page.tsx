@@ -2,8 +2,10 @@
 
 import BlackButton from '@/components/BlackButton';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
-export default function vote() {
+export default function VoteStartPage() {
+  const router = useRouter();
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-between pt-50 pb-30">
       <div className="w-90 px-8 flex items-between flex-col overflow-hidden gap-4">
@@ -13,7 +15,7 @@ export default function vote() {
       <div className="flex flex-col gap-4">
         <BlackButton
           onClick={() => {
-            window.location.href = '/auth/select';
+            router.push('/select');
           }}
         >
           Start

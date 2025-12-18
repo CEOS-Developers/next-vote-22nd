@@ -40,14 +40,20 @@ const emailLocalSchema = z
   .refine((v) => !v.includes('@'), {
     message: '@는 입력하지 마세요',
   });
-const emailDomain = z.string().min(1, '이메일 도메인을 선택해주세요');
+const emailDomainSchema = z.string().min(1, '이메일 도메인을 선택해주세요');
+const nameSchema = z.string().min(1, '이름을 입력해주세요');
+const teamSchema = z.string().min(1, '팀을 선택해주세요');
+const partSchema = z.string().min(1, '파트를 선택해주세요');
 export const joinSchema = z
   .object({
     id: idSchema,
     password: passwordSchema,
     confirmPassword: z.string(),
     emailLocal: emailLocalSchema,
-    emailDomain: emailDomain,
+    emailDomain: emailDomainSchema,
+    name: nameSchema,
+    team: teamSchema,
+    part: partSchema,
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: '비밀번호가 일치하지 않습니다',
