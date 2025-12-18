@@ -3,31 +3,35 @@ import BlackButton from '@/components/BlackButton';
 import Header from '@/components/Header';
 import InputSection from '@/components/InputSection';
 import { useState } from 'react';
-
+import { loginSchema } from '@/lib/auth';
+import { useRouter } from 'next/navigation';
+import { set } from 'zod';
 export default function Login() {
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
-
-  // 더미 사용자 데이터
-  const dummyUser = {
-    id: 'test',
-    password: '1234',
-  };
-
+  const router = useRouter();
+  const [form, setForm] = useState({
+    id: '',
+    password: '',
+  });
+  const [errors, setErrors] = useState<{
+    id?: string;
+    password?: string;
+  }>({});
   const handleLogin = () => {
-    if (id === dummyUser.id && password === dummyUser.password) {
-      alert('로그인 성공!');
-      window.location.href = '/auth/vote';
-    } else {
-      alert('ID 또는 비밀번호가 올바르지 않습니다.');
+    setErrors({});
+    const result = loginSchema.safeParse(form);
+
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      setErrors({
+        id: fieldErrors.id?.[0],
+        password: fieldErrors.password?.[0],
+      });
+      return;
     }
+    router.push('/auth/vote');
+    // 여기서 API 요청 보내기
+    console.log('로그인 성공', result.data);
   };
-  //이 방식보다 form을 이용하는 방식이 더 나음
-  //   const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-  //   if (e.key === 'Enter') {
-  //     handleLogin();
-  //   };
-  // };
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-center gap-5">
       <Header>Login</Header>
@@ -38,13 +42,24 @@ export default function Login() {
         }}
         className="flex flex-col items-center gap-5"
       >
-        <InputSection type="text" placeholder="ID" value={id} onChange={(e) => setId(e.target.value)} />
-        <InputSection
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div>
+          <InputSection
+            type="text"
+            placeholder="ID"
+            value={form.id}
+            onChange={(e) => setForm({ ...form, id: e.target.value })}
+          />
+          {errors.id && <p className="text-red-400 text-xs">{errors.id}</p>}
+        </div>
+        <div>
+          <InputSection
+            type="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={(e) => setForm({ ...form, password: e.target.value })}
+          />
+          {errors.password && <p className="text-red-400 text-xs">{errors.password}</p>}
+        </div>
         <BlackButton type="submit">login</BlackButton>
       </form>
     </div>

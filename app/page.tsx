@@ -2,8 +2,10 @@
 
 import BlackButton from '@/components/BlackButton';
 import Image from 'next/image';
+import { useState } from 'react';
 
-export default function Vote() {
+export default function Home() {
+  const [isLogin, setIsLogin] = useState(false);
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-between pt-50 pb-30">
       {/* 이미지와 텍스트를 좌우로 배치 */}
@@ -14,21 +16,33 @@ export default function Vote() {
         <Image src="/icons/vote.svg" alt="logo" width={150} height={150} loading="eager" />
       </div>
       <div className="flex flex-col gap-4">
-        <BlackButton
-          onClick={() => {
-            window.location.href = '/auth/login';
-          }}
-        >
-          join us!
-        </BlackButton>
-        <button
-          className="text-black underline cursor-pointer"
-          onClick={() => {
-            window.location.href = '/auth/signUp';
-          }}
-        >
-          sign up as a member
-        </button>
+        {isLogin ? (
+          <BlackButton
+            onClick={() => {
+              setIsLogin(false);
+            }}
+          >
+            logout
+          </BlackButton>
+        ) : (
+          <>
+            <BlackButton
+              onClick={() => {
+                window.location.href = '/auth/login';
+              }}
+            >
+              join us!
+            </BlackButton>
+            <button
+              className="text-black underline cursor-pointer"
+              onClick={() => {
+                window.location.href = '/auth/signUp';
+              }}
+            >
+              sign up as a member
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
