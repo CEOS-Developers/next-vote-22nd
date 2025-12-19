@@ -33,7 +33,7 @@ export default function Home() {
                 router.push('/auth/login');
               }}
             >
-              join us!
+              로그인 하러가기
             </BlackButton>
             <button
               className="text-black underline cursor-pointer"
@@ -41,7 +41,7 @@ export default function Home() {
                 router.push('/auth/signUp');
               }}
             >
-              sign up as a member
+              회원가입하기
             </button>
           </>
         )}

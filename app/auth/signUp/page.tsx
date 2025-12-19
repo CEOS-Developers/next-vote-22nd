@@ -117,13 +117,12 @@ export default function SignUp() {
         {errors.confirmPassword && <p className="text-red-500 text-xs">{errors.confirmPassword}</p>}
       </div>
       <div>
-        <div className="flex border-b-3 border-brown justify-center items-center w-80 gap-2 mb-1">
-          <input
+        <div className="flex justify-center items-center w-80 gap-2 mb-1">
+          <InputSection
             type="text"
             placeholder="Email"
             value={form.email}
             onChange={(e) => setForm({ ...form, email: e.target.value })}
-            className="w-50"
           />
         </div>
         {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
@@ -147,6 +146,7 @@ export default function SignUp() {
             value={form.part}
             onChange={(e) => setForm({ ...form, part: e.target.value as 'FRONTEND' | 'BACKEND' })}
           >
+            <option value="">파트 선택</option>
             <option value="BACKEND">백엔드</option>
             <option value="FRONTEND">프론트엔드</option>
           </select>

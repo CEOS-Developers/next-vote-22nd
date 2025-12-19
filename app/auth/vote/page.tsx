@@ -9,7 +9,7 @@ export default function VoteStartPage() {
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-between pt-50 pb-30">
       <div className="w-90 px-8 flex items-between flex-col overflow-hidden gap-4">
-        <span className="text-black font-bold text-3xl text-shadow-lg text-right">Start Vote!</span>
+        <span className="text-black font-bold text-3xl text-shadow-lg text-right">환영합니다!</span>
         <Image src="/icons/vote.svg" alt="logo" width={150} height={150} loading="eager" />
       </div>
       <div className="flex flex-col gap-4">
@@ -18,7 +18,7 @@ export default function VoteStartPage() {
             router.push('/select');
           }}
         >
-          Start
+          투표시작하기
         </BlackButton>
       </div>
     </div>

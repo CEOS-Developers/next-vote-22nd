@@ -5,6 +5,7 @@ import DemoCandidateList from '@/components/demoVote/DemoCandidateList';
 import { MockTeamCandidates } from '@/lib';
 import VoteHeader from '@/components/vote/VoteHeader';
 import SubmitButton from '@/components/SubmitButton';
+import RequireAuth from '@/components/RequireAuth';
 
 export default function DemoDayVotePage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -13,8 +14,10 @@ export default function DemoDayVotePage() {
     <main className="relative w-full h-screen  w-[375px] flex flex-col bg-[#FFD954]">
       <section className="flex flex-1 flex-col items-center">
         <VoteHeader title={'데모데이 투표'} blackDot={2} backBtn={true} />
-        <DemoCandidateList candidates={MockTeamCandidates} selectedId={selectedId} onSelect={setSelectedId} />
-        <SubmitButton selectedId={selectedId} position="member" />
+        <RequireAuth>
+          <DemoCandidateList candidates={MockTeamCandidates} selectedId={selectedId} onSelect={setSelectedId} />
+          <SubmitButton selectedId={selectedId} position="member" />
+        </RequireAuth>
       </section>
     </main>
   );
