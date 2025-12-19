@@ -5,7 +5,7 @@ import DemoCandidateList from '@/components/demoVote/DemoCandidateList';
 import { MockTeamCandidates } from '@/lib';
 import VoteHeader from '@/components/vote/VoteHeader';
 import SubmitButton from '@/components/SubmitButton';
-import RequireAuth from '@/components/RequireAuth';
+import RequireAuth from '@/components/auth/RequireAuth';
 
 export default function DemoDayVotePage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);

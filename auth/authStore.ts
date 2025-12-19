@@ -30,6 +30,7 @@ export const useAuth = create<AuthState>()(
 );
 
 // 로그인 여부 체크
+//access토큰 여부로 판단하지 않음
 export const useIsAuthed = () => {
   const accessToken = useAuth((s) => s.accessToken);
   return !!accessToken;

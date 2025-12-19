@@ -1,4 +1,4 @@
-import { apiPublic } from '../api/client';
+import { apiPrivate, apiPublic } from '../api/client';
 
 export const authService = {
   // 일반 로그인
@@ -46,6 +46,31 @@ export const authService = {
       };
     }>('/auth/signup', data);
     console.log(res.data.payload);
+    return res.data.payload;
+  },
+  logout: async () => {
+    const res = await apiPrivate.post<{
+      isSuccess: boolean;
+      message: string;
+      statusCode: number;
+      payload: {
+        memberId: string;
+      };
+    }>('/auth/logout');
+    console.log(res.data);
+    return res.data;
+  },
+  reissue: async () => {
+    const res = await apiPrivate.post<{
+      isSuccess: boolean;
+      message: string;
+      statusCode: number;
+      payload: {
+        accessToken: string;
+        expiresIn: number;
+      };
+    }>('/auth/reissue');
+
     return res.data.payload;
   },
 };

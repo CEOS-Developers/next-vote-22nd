@@ -2,7 +2,7 @@
 
 import VoteHeader from '@/components/vote/VoteHeader';
 import DemoVoteBody from '@/components/demoVote/DemoVoteBody';
-import RequireAuth from '@/components/RequireAuth';
+import RequireAuth from '@/components/auth/RequireAuth';
 
 export default function DemoVotePage() {
   return (

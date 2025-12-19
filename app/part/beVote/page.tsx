@@ -5,7 +5,7 @@ import PartCandidateList from '@/components/partVote/PartCandidateList';
 import { MockPartCandidates } from '@/lib';
 import VoteHeader from '@/components/vote/VoteHeader';
 import SubmitButton from '@/components/SubmitButton';
-import RequireAuth from '@/components/RequireAuth';
+import RequireAuth from '@/components/auth/RequireAuth';
 
 export default function BeVotePage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);

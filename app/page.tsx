@@ -1,13 +1,24 @@
 'use client';
 
+import { useAuth, useIsAuthed } from '@/auth/authStore';
 import BlackButton from '@/components/BlackButton';
+import { authService } from '@/services/authService';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
 export default function Home() {
-  const [isLogin, setIsLogin] = useState(false);
+  const isLogin = useIsAuthed();
   const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await authService.logout();
+    } catch (e) {
+      console.log('logout 실패', e);
+    } finally {
+      useAuth.getState().logout(); // Zustand 초기화
+      router.push('/');
+    }
+  };
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-between pt-50 pb-30">
       {/* 이미지와 텍스트를 좌우로 배치 */}
@@ -19,13 +30,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col gap-4">
         {isLogin ? (
-          <BlackButton
-            onClick={() => {
-              setIsLogin(false);
-            }}
-          >
-            logout
-          </BlackButton>
+          <BlackButton onClick={handleLogout}>logout</BlackButton>
         ) : (
           <>
             <BlackButton

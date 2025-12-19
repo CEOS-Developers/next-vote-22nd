@@ -6,7 +6,7 @@ const API_BASE = process.env.NEXT_PUBLIC_BASE_URL;
 // 인증 필요 없는 API
 export const apiPublic = axios.create({
   baseURL: API_BASE,
-  withCredentials: true,
+  withCredentials: true, // refresh token 쿠키 전송
 });
 
 // 인증 필요한 API

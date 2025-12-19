@@ -1,7 +1,7 @@
 'use client';
 import VoteMainHeader from '@/components/vote/VoteMainHeader';
 import VoteBody from '@/components/vote/VoteBody';
-import RequireAuth from '@/components/RequireAuth';
+import RequireAuth from '@/components/auth/RequireAuth';
 
 export default function Select() {
   return (

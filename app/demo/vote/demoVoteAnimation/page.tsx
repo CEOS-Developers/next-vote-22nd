@@ -2,7 +2,7 @@
 
 import VoteHeader from '@/components/vote/VoteHeader';
 import VoteAnimation from '@/components/vote/VoteAnimation';
-import RequireAuth from '@/components/RequireAuth';
+import RequireAuth from '@/components/auth/RequireAuth';
 
 export default function DemoVoteAnimationPage() {
   return (
