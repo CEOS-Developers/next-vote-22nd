@@ -1,4 +1,4 @@
-// components/vote/CandidateCard.tsx
+
 import type { candidateResponse } from '@/types/vote';
 
 type Props = {

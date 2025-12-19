@@ -1,47 +1,59 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
+import { getAccessToken } from "@/lib/api/token";
+import { voteLeader } from "@/lib/services/vote";
+import { voteTeam } from "@/lib/services/teamVote"; // ✅ 추가
 
 type Props = {
   selectedId: string | null;
-  position: 'voterFE' | 'voterBE' | 'member';
+  position: "voterFE" | "voterBE" | "member";
 };
 
 export default function SubmitBtn({ selectedId, position }: Props) {
   const router = useRouter();
 
-  const handleClick = () => {
+  const handleClick = async () => {
     try {
-      if (!selectedId) {
-        alert('후보를 선택해주세요.');
+      const token = getAccessToken();
+      if (!token) {
+        alert("로그인이 필요합니다.");
         return;
       }
 
-      // 데이터 (임시)
+      const candidateId = Number(selectedId);
+      if (!Number.isFinite(candidateId)) {
+        alert("candidateId가 올바르지 않습니다.");
+        return;
+      }
+
+      // ✅ 투표 API 분기
+      if (position === "member") {
+        // 데모데이 팀 투표
+        await voteTeam(candidateId, token);
+      } else {
+        // 파트장 투표
+        await voteLeader(candidateId, token);
+      }
+
       const data = {
         position,
-        candidateId: selectedId,
-        timestamp: Date.now(),
+        candidateId,
       };
 
-      //localStorage에 저장
-      localStorage.setItem('lastVote', JSON.stringify(data));
+      localStorage.setItem("lastVote", JSON.stringify(data));
+      console.log("제출됨:", data);
 
-      //콜솔
-      console.log('제출됨:', data);
-
-      //파트에 따라 라우팅 경로 결정 후 라우팅
       const path = {
-        voterFE: '/part/feVote/feVoteAnimation',
-        voterBE: '/part/beVote/beVoteAnimation',
-        member: '/demo/vote/demoVoteAnimation',
+        voterFE: "/part/feVote/feVoteAnimation",
+        voterBE: "/part/beVote/beVoteAnimation",
+        member: "/demo/vote/demoVoteAnimation",
       } as const;
-      router.push(path[position]);
 
-      //간단한 에러메세지
+      router.push(path[position]);
     } catch (error) {
-      console.error('제출 중 에러 발생:', error);
-      alert('에러가 발생헀습니다.');
+      console.error("제출 중 에러 발생:", error);
+      alert("투표 요청 중 에러가 발생했습니다.");
     }
   };
 

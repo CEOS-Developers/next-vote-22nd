@@ -3,14 +3,11 @@
 import { useEffect, useState } from 'react';
 
 import DemoCandidateList from '@/components/demoVote/DemoCandidateList';
-import VoteHeader from '@/components/vote/VoteHeader';
-import SubmitButton from '@/components/SubmitButton';
-
 import type { teamResponse } from '@/types/teamVote';
 import { getTeams } from '@/lib/services/teamVote';
 import { getAccessToken } from '@/lib/api/token';
 
-export default function DemoDayVotePage() {
+export default function DemoCandidateSelection () {
   const [candidates, setCandidates] = useState<teamResponse[]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -40,24 +37,14 @@ export default function DemoDayVotePage() {
     run();
   }, []);
 
+  if (loading) return <div>loading...</div>;
+  if (error) return <div>error: {error}</div>;
+
   return (
-    <main className="relative w-full h-screen w-[375px] flex flex-col bg-[#FFD954]">
-      <section className="flex flex-1 flex-col items-center">
-        <VoteHeader title={'데모데이 투표'} blackDot={2} backBtn={true} />
-
-        {loading && <div className="mt-6">loading...</div>}
-        {error && <div className="mt-6">error: {error}</div>}
-
-        {!loading && !error && (
-          <DemoCandidateList
-            candidates={candidates}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-          />
-        )}
-
-        <SubmitButton selectedId={selectedId} position="member" />
-      </section>
-    </main>
+    <DemoCandidateList
+      candidates={candidates}
+      selectedId={selectedId}
+      onSelect={(id) => setSelectedId(id)}
+    />
   );
 }

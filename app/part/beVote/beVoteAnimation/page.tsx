@@ -8,7 +8,7 @@ export default function BeVoteAnimation() {
     <main className="relative w-full h-screen  w-[375px] flex flex-col bg-[#FFD954]">
       <section className="flex flex-1 flex-col items-center">
         <VoteHeader title={'BE 파트장 투표'} blackDot={2} backBtn={false} />
-        <VoteAnimation />
+        <VoteAnimation resultHref="/part/result"/>
       </section>
     </main>
   );

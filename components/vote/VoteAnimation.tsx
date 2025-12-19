@@ -4,8 +4,13 @@
 import Image from 'next/image';
 import ballot from '@/public/icons/ballot.svg';
 import Box from '@/public/icons/box';
+import Link from 'next/link';
 
-export default function VoteAnimation() {
+type Props = {
+  resultHref: '/part/result' | '/demo/result';
+};
+
+export default function VoteAnimation({ resultHref }: Props) {
   return (
     <>
       <div className="relative bg-[#FFD954] flex items-center justify-center">
@@ -20,9 +25,12 @@ export default function VoteAnimation() {
         </div>
       </div>
 
-      <div className="buttonChange w-[180px] h-[50px] rounded-full mb-[80px] bg-gray-300 border-black border-[2.3px] mt-auto">
+      <Link
+        href={resultHref}
+        className="buttonChange w-[180px] h-[50px] rounded-full mb-[80px] bg-gray-300 border-black border-[2.3px] mt-auto"
+      >
         <span className="flex justify-center mt-[10px] text-black text-[16px] font-bold">결과보기</span>
-      </div>
+      </Link>
 
       {/* 애니메이션 정의 */}
       <style jsx global>{`

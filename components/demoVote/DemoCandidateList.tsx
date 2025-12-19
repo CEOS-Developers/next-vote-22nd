@@ -1,11 +1,11 @@
 // components/demoCandidateList.tsx
 'use client';
 
-import type { candidateResponse } from '@/types/vote';
+import type { teamResponse } from '@/types/teamVote';
 import DemoCandidateCard from '@/components/demoVote/DemoCandidateCard';
 
 type Props = {
-  candidates: candidateResponse[];
+  candidates: teamResponse[];
   selectedId: string | null;
   onSelect: (id: string) => void;
 };
