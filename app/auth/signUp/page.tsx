@@ -118,11 +118,11 @@ export default function SignUp() {
             onChange={(e) => setForm({ ...form, team: e.target.value })}
           >
             <option value="">Team 선택</option>
-            <option value="Team CatchUp">Team CatchUp</option>
-            <option value="Team STORIX">Team STORIX</option>
-            <option value="Team Modelly">Team Modelly</option>
-            <option value="Team Menual">Team Menual</option>
-            <option value="Team DiggIndie">Team DiggIndie</option>
+            <option value="catchup">Team CatchUp</option>
+            <option value="storix">Team STORIX</option>
+            <option value="modelly">Team Modelly</option>
+            <option value="menual">Team Menual</option>
+            <option value="diggindie">Team DiggIndie</option>
           </select>
           <select
             className="border-b-3 border-brown w-40 py-2 focus:outline-none text-lg"
@@ -130,10 +130,8 @@ export default function SignUp() {
             onChange={(e) => setForm({ ...form, part: e.target.value })}
           >
             <option value="">Part 선택</option>
-            <option value="기획">기획</option>
-            <option value="백엔드">백엔드</option>
-            <option value="프론트엔드">프론트엔드</option>
-            <option value="디자인">디자인</option>
+            <option value="BACKEND">백엔드</option>
+            <option value="FRONTEND">프론트엔드</option>
           </select>
         </div>
         <div className="px-2">

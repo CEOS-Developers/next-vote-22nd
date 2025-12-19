@@ -15,3 +15,10 @@ export type voteRequest = {
 export type voteTeamRequest = {
   candidateId: string;
 };
+
+export type User = {
+  id: string;
+  name?: string;
+  part?: 'BACKEND' | 'FRONTEND';
+  team?: string;
+};

@@ -5,6 +5,9 @@ import InputSection from '@/components/InputSection';
 import { useState } from 'react';
 import { loginSchema } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
+import { authService } from '@/services/authService';
+import { useAuth } from '@/auth/authStore';
+
 export default function Login() {
   const router = useRouter();
   const [form, setForm] = useState({
@@ -15,7 +18,8 @@ export default function Login() {
     id?: string;
     password?: string;
   }>({});
-  const handleLogin = () => {
+  const login = useAuth((s) => s.login);
+  const handleLogin = async () => {
     setErrors({});
     const result = loginSchema.safeParse(form);
 
@@ -27,9 +31,21 @@ export default function Login() {
       });
       return;
     }
-    router.push('/auth/vote');
     // 여기서 API 요청 보내기
-    console.log('로그인 성공', result.data);
+    try {
+      const res = await authService.login(form.id, form.password);
+
+      login(res.accessToken, {
+        id: String(res.memberId),
+        name: res.name,
+        part: res.part,
+        team: res.team,
+      });
+      router.push('/auth/vote');
+      console.log('로그인 성공', result.data);
+    } catch (error) {
+      console.error('로그인 실패', error);
+    }
   };
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-center gap-5">
