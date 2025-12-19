@@ -31,13 +31,7 @@ const passwordSchema = z
       message: '비밀번호는 영문, 숫자, 특수문자 중 2가지 이상을 조합해야 합니다',
     },
   );
-const emailLocalSchema = z
-  .string()
-  .min(1, '올바른 이메일 형식이 아닙니다')
-  .refine((v) => !v.includes('@'), {
-    message: '@는 입력하지 마세요',
-  });
-const emailDomainSchema = z.string().min(1, '이메일 도메인을 선택해주세요');
+const emailSchema = z.string().min(1, '올바른 이메일 형식이 아닙니다').email('올바른 이메일 형식이 아닙니다.');
 const nameSchema = z.string().min(1, '이름을 입력해주세요');
 const teamSchema = z.string().min(1, '팀을 선택해주세요');
 const partSchema = z.string().min(1, '파트를 선택해주세요');
@@ -46,8 +40,7 @@ export const joinSchema = z
     id: idSchema,
     password: passwordSchema,
     confirmPassword: z.string(),
-    emailLocal: emailLocalSchema,
-    emailDomain: emailDomainSchema,
+    email: emailSchema,
     name: nameSchema,
     team: teamSchema,
     part: partSchema,

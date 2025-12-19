@@ -20,7 +20,6 @@ export const authService = {
       password,
     });
     console.log(res.data.payload);
-    alert('로그인 성공');
     return res.data.payload;
   },
 
@@ -29,11 +28,24 @@ export const authService = {
     loginId: string;
     password: string;
     email: string;
-    part: 'BACKEND' | 'FRONTEND';
+    part: 'FRONTEND' | 'BACKEND';
     name: string;
     team: string;
   }) => {
-    const res = await apiPublic.post('/auth/signup', data);
-    return res.data;
+    const res = await apiPublic.post<{
+      isSuccess: boolean;
+      message: string;
+      statusCode: number;
+      payload: {
+        memberId: string;
+        name: string;
+        part: 'FRONTEND' | 'BACKEND';
+        team: string;
+        accessToken: string;
+        expiresIn: number;
+      };
+    }>('/auth/signup', data);
+    console.log(res.data.payload);
+    return res.data.payload;
   },
 };

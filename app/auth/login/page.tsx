@@ -42,8 +42,9 @@ export default function Login() {
         team: res.team,
       });
       router.push('/auth/vote');
-      console.log('로그인 성공', result.data);
+      alert('로그인 성공');
     } catch (error) {
+      alert('로그인 실패');
       console.error('로그인 실패', error);
     }
   };

@@ -5,31 +5,40 @@ import InputSection from '@/components/InputSection';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { joinSchema } from '@/lib/auth';
+import { authService } from '@/services/authService';
+import { useAuth } from '@/auth/authStore';
 
 export default function SignUp() {
   const router = useRouter();
-  const [form, setForm] = useState({
+  type Part = 'FRONTEND' | 'BACKEND';
+  const [form, setForm] = useState<{
+    name: string;
+    id: string;
+    password: string;
+    confirmPassword: string;
+    email: string;
+    team: string;
+    part: Part;
+  }>({
     name: '',
     id: '',
     password: '',
     confirmPassword: '',
-    emailLocal: '',
-    emailDomain: '',
+    email: '',
     team: '',
-    part: '',
+    part: 'BACKEND',
   });
   const [errors, setErrors] = useState<{
     name?: string;
     id?: string;
     password?: string;
     confirmPassword?: string;
-    emailLocal?: string;
-    emailDomain?: string;
+    email?: string;
     team?: string;
     part?: string;
   }>({});
-
-  const handleSignUp = () => {
+  const join = useAuth((s) => s.login);
+  const handleSignUp = async () => {
     const result = joinSchema.safeParse(form);
 
     if (!result.success) {
@@ -38,8 +47,7 @@ export default function SignUp() {
         id: fieldErrors.id?.[0],
         password: fieldErrors.password?.[0],
         confirmPassword: fieldErrors.confirmPassword?.[0],
-        emailLocal: fieldErrors.emailLocal?.[0],
-        emailDomain: fieldErrors.emailDomain?.[0],
+        email: fieldErrors.email?.[0],
         name: fieldErrors.name?.[0],
         team: fieldErrors.team?.[0],
         part: fieldErrors.part?.[0],
@@ -47,7 +55,26 @@ export default function SignUp() {
       return;
     }
     // 여기서 API 요청 보내기
-    console.log('회원가입 성공', result.data);
+    try {
+      const payload = await authService.signup({
+        loginId: form.id,
+        password: form.password,
+        email: form.email,
+        part: form.part,
+        name: form.name,
+        team: form.team,
+      });
+
+      join(payload.accessToken, {
+        id: payload.memberId,
+        name: payload.name,
+        part: payload.part,
+        team: payload.team,
+      });
+      alert('회원가입 성공');
+    } catch (error) {
+      console.log(error);
+    }
     router.push('/');
   };
   return (
@@ -94,21 +121,12 @@ export default function SignUp() {
           <input
             type="text"
             placeholder="Email"
-            value={form.emailLocal}
-            onChange={(e) => setForm({ ...form, emailLocal: e.target.value })}
+            value={form.email}
+            onChange={(e) => setForm({ ...form, email: e.target.value })}
             className="w-50"
           />
-          <select
-            className="py-2 focus:outline-none text-lg mt-2"
-            value={form.emailDomain}
-            onChange={(e) => setForm({ ...form, emailDomain: e.target.value })}
-          >
-            <option>@naver.com</option>
-            <option>@gmail.com</option>
-          </select>
         </div>
-        {errors.emailLocal && <p className="text-red-500 text-xs">{errors.emailLocal}</p>}
-        {errors.emailDomain && <p className="text-red-500 text-xs">{errors.emailDomain}</p>}
+        {errors.email && <p className="text-red-500 text-xs">{errors.email}</p>}
       </div>
       <div className="flex flex-col mb-4">
         <div className="flex gap-4 pb-2">
@@ -127,9 +145,8 @@ export default function SignUp() {
           <select
             className="border-b-3 border-brown w-40 py-2 focus:outline-none text-lg"
             value={form.part}
-            onChange={(e) => setForm({ ...form, part: e.target.value })}
+            onChange={(e) => setForm({ ...form, part: e.target.value as 'FRONTEND' | 'BACKEND' })}
           >
-            <option value="">Part 선택</option>
             <option value="BACKEND">백엔드</option>
             <option value="FRONTEND">프론트엔드</option>
           </select>
