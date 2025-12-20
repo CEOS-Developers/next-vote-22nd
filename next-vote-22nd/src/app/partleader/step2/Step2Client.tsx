@@ -71,9 +71,7 @@ export default function Step2Client() {
           error.message ||
           '알 수 없는 오류';
 
-        alert(
-          `투표에 실패했습니다.\n에러: ${errorMsg}\n\n브라우저 콘솔을 확인해주세요.`
-        );
+        alert(`에러: ${errorMsg}`);
       },
     });
   };

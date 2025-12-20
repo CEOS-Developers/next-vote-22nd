@@ -1,7 +1,27 @@
 // src/app/electionSelect/page.tsx
-import MiddleBox from "@/components/box/MiddleBox";
+'use client';
+
+import MiddleBox from '@/components/box/MiddleBox';
+import { useLogout } from '@/features/auth/hooks/use-auth';
 
 export default function SelectPage() {
+  const logoutMutation = useLogout();
+
+  const handleLogout = () => {
+    const refreshToken =
+      typeof window !== 'undefined'
+        ? sessionStorage.getItem('refreshToken')
+        : null;
+
+    if (!refreshToken) {
+      // refreshToken 없으면 그냥 로컬 로그아웃 처리
+      logoutMutation.mutate('');
+      return;
+    }
+
+    logoutMutation.mutate(refreshToken);
+  };
+
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--color-main-extra-light)] px-6 py-12">
       {/* 아이폰 프레임 */}
@@ -15,6 +35,18 @@ export default function SelectPage() {
             <MiddleBox label="demoday" />
           </div>
         </div>
+
+        {/*  로그아웃 버튼  */}
+        <button
+          type="button"
+          onClick={handleLogout}
+          disabled={logoutMutation.isPending}
+          className="mt-12 w-full rounded-full border-2 border-black px-6 py-3 text-base font-semibold transition-colors
+             hover:bg-[var(--color-main-light)] hover:text-black
+             disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {logoutMutation.isPending ? '로그아웃 중...' : '로그아웃'}
+        </button>
       </div>
     </main>
   );
