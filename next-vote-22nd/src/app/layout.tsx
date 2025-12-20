@@ -1,11 +1,11 @@
-// app/layout.tsx
-
-import "@/styles/globals.css";
-import type { Metadata } from "next";
+// src/app/layout.tsx
+import '@/styles/globals.css';
+import type { Metadata } from 'next';
+import { ReactQueryProvider } from '@/lib/react-query';
 
 export const metadata: Metadata = {
   icons: {
-    icon: "/favicon.ico",
+    icon: '/favicon.ico',
   },
 };
 
@@ -16,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="min-h-dvh">{children}</body>
+      <body className="min-h-dvh">
+        <ReactQueryProvider>{children}</ReactQueryProvider>
+      </body>
     </html>
   );
 }

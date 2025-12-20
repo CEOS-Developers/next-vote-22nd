@@ -1,31 +1,32 @@
 // src/components/box/LargeBox.tsx
-import Link from "next/link";
+'use client';
+
+import React from 'react';
+import Link from 'next/link';
 
 interface LargeBoxProps {
   title: string;
-  buttonLabel: string;
+  voteLink: string;
+  resultLink: string;
 }
 
-const LargeBox = ({ title, buttonLabel }: LargeBoxProps) => {
-  const label =
-    title === "FE 파트장 투표" || title === "BE 파트장 투표"
-      ? "partleader"
-      : "demoday";
-
+export default function LargeBox({
+  title,
+  voteLink,
+  resultLink,
+}: LargeBoxProps) {
   return (
-    <Link
-      href={{ pathname: `/${label}/step2`, query: { title } }}
-      className="group flex w-full flex-col gap-8 border-2 border-black bg-[var(--color-gray-50)] px-6 py-8 hover:shadow-lg"
-    >
-      <div className="flex items-center justify-between">
-        <span className="text-headline-02">{title}</span>
-        <span className="h-12 w-12 rounded-full border-2 border-black transition-colors group-hover:bg-[var(--color-main-light)]" />
-      </div>
-      <div className="ml-auto rounded-full border-2 border-black px-6 py-2 text-button-02 transition-colors hover:bg-[var(--color-main)]">
-        {buttonLabel}
-      </div>
-    </Link>
+    <div className="flex h-32 w-full items-center justify-between rounded-2xl border-2 border-black bg-white px-6 transition-all hover:bg-gray-50">
+      <Link href={voteLink} className="flex-1">
+        <p className="text-headline-02">{title}</p>
+      </Link>
+      <Link
+        href={resultLink}
+        className="ml-4 rounded-full border-2 border-black bg-white px-4 py-2 text-sm font-semibold transition-colors hover:bg-gray-100"
+        onClick={(e) => e.stopPropagation()}
+      >
+        결과 보기
+      </Link>
+    </div>
   );
-};
-
-export default LargeBox;
+}
