@@ -1,25 +1,37 @@
-// src/app/demoday/step2/page.tsx
+// src/app/partleader/step2/Step2Client.tsx
 'use client';
 
 import Link from 'next/link';
 import SmallBox from '@/components/box/SmallBox';
-import { Suspense, useState } from 'react';
-import { demodayCandidates, DemodayCandidate } from '@/data/demodayCandidates';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import {
+  feCandidates,
+  beCandidates,
+  PartleaderCandidate,
+} from '@/data/partleaderCandidates';
 import { useVote } from '@/features/vote/hooks/use-vote';
 
 const steps = [1, 2, 3];
 const currentStep = 2;
 
-interface CandidateWithSelection extends DemodayCandidate {
+interface CandidateWithSelection extends PartleaderCandidate {
   isSelect: boolean;
 }
 
-function DemoDayContent() {
-  const [candidates, setCandidates] = useState<CandidateWithSelection[]>(
-    demodayCandidates.map((c) => ({ ...c, isSelect: false }))
-  );
+export default function Step2Client() {
+  const searchParams = useSearchParams();
+  const pageTitle = searchParams.get('title') ?? 'FE 파트장 투표';
 
+  const [candidates, setCandidates] = useState<CandidateWithSelection[]>([]);
   const voteMutation = useVote();
+
+  useEffect(() => {
+    const isFE = pageTitle.includes('FE');
+    const candidateList = isFE ? feCandidates : beCandidates;
+
+    setCandidates(candidateList.map((c) => ({ ...c, isSelect: false })));
+  }, [pageTitle]);
 
   const handleSelect = (index: number) => {
     setCandidates((prev) =>
@@ -36,16 +48,32 @@ function DemoDayContent() {
     if (!selectedCandidate) return;
 
     console.log('🔍 투표 시도 - candidateId:', selectedCandidate.id);
+    console.log('🔍 투표 시도 - candidate:', selectedCandidate);
 
-    // 실제 API 호출
     voteMutation.mutate(selectedCandidate.id, {
-      onSuccess: () => {
-        alert(`${selectedCandidate.team}에 투표했습니다!`);
-        window.location.href = '/demoday/step3';
+      onSuccess: (data) => {
+        console.log('✅ 투표 성공:', data);
+        alert(`${selectedCandidate.name}님에게 투표했습니다!`);
+
+        window.location.href = `/partleader/step3?title=${encodeURIComponent(
+          pageTitle.replace('투표', '투표 결과')
+        )}`;
       },
-      onError: (error) => {
-        console.error('❌ 투표 실패:', error);
-        alert('투표에 실패했습니다. 다시 시도해주세요.');
+      onError: (error: any) => {
+        console.error('❌ 투표 실패 - Full Error:', error);
+        console.error('❌ 투표 실패 - Response:', error.response?.data);
+        console.error('❌ 투표 실패 - Status:', error.response?.status);
+        console.error('❌ 투표 실패 - Message:', error.message);
+
+        const errorMsg =
+          error.response?.data?.message ||
+          error.response?.data?.error ||
+          error.message ||
+          '알 수 없는 오류';
+
+        alert(
+          `투표에 실패했습니다.\n에러: ${errorMsg}\n\n브라우저 콘솔을 확인해주세요.`
+        );
       },
     });
   };
@@ -73,21 +101,21 @@ function DemoDayContent() {
         <div className="flex w-full flex-col items-center gap-6">
           <div className="flex w-full items-center gap-12">
             <Link
-              href="/demoday/step1"
+              href="/partleader/step1"
               aria-label="이전으로 이동"
               className="text-3xl text-black transition-colors hover:text-[var(--color-main)]"
             >
               ←
             </Link>
-            <p className="text-headline-01">데모데이 투표</p>
+            <p className="text-headline-01">{pageTitle}</p>
           </div>
 
           <div className="h-[3px] w-full bg-black" />
 
-          <div className="grid w-full grid-cols-1 gap-4">
+          <div className="grid w-full grid-cols-2 gap-4">
             {candidates.map((candidate, index) => (
               <SmallBox
-                key={candidate.team}
+                key={`${candidate.team}-${candidate.name}`}
                 name={candidate.name}
                 team={candidate.team}
                 isSelect={candidate.isSelect}
@@ -111,13 +139,5 @@ function DemoDayContent() {
         </button>
       </div>
     </main>
-  );
-}
-
-export default function DemoDayStep2Page() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <DemoDayContent />
-    </Suspense>
   );
 }

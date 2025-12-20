@@ -1,48 +1,60 @@
-// src/app/demoday/step3/page.tsx
+// src/app/partleader/step3/Step3Client.tsx
 'use client';
 
 import Link from 'next/link';
 import ResultBox from '@/components/box/ResultBox';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { demodayCandidates, DemodayCandidate } from '@/data/demodayCandidates';
+import {
+  feCandidates,
+  beCandidates,
+  PartleaderCandidate,
+} from '@/data/partleaderCandidates';
 import { useQuery } from '@tanstack/react-query';
 import { voteRepository } from '@/features/vote/api/vote.repository';
 
 const steps = [1, 2, 3];
 const currentStep = 3;
 
-export default function DemoDayStep3Page() {
-  const [candidates, setCandidates] = useState<DemodayCandidate[]>([]);
+export default function Step3Client() {
+  const searchParams = useSearchParams();
+  const pageTitle = searchParams.get('title') ?? 'FE 파트장 투표 결과';
 
-  // API에서 실제 득표 데이터 가져오기
+  const [candidates, setCandidates] = useState<PartleaderCandidate[]>([]);
+
   const { data: apiCandidates } = useQuery({
-    queryKey: ['demoday-results'],
-    queryFn: () => voteRepository.getDemoDayCandidates(),
+    queryKey: ['partleader-results'],
+    queryFn: () => voteRepository.getPartLeaderCandidates(),
     retry: 1,
   });
 
   useEffect(() => {
-    let finalCandidates: DemodayCandidate[];
+    const isFE = pageTitle.includes('FE');
+    const localCandidates = isFE ? feCandidates : beCandidates;
+
+    let finalCandidates: PartleaderCandidate[];
 
     if (apiCandidates && apiCandidates.length > 0) {
-      // API 데이터가 있으면 사용
       console.log('✅ API 데이터 사용:', apiCandidates);
-      finalCandidates = apiCandidates.map((c) => ({
+
+      const converted: PartleaderCandidate[] = apiCandidates.map((c) => ({
         id: c.id,
         team: c.team,
         name: c.name,
+        part: c.team.includes('프론트') || c.team.includes('FE') ? 'FE' : 'BE',
         votes: c.votes,
       }));
+
+      const filtered = converted.filter((c) => c.part === (isFE ? 'FE' : 'BE'));
+      finalCandidates = filtered;
     } else {
-      // API 데이터가 없으면 로컬 데이터 사용
       console.log('⚠️ 로컬 데이터 사용 (API 데이터 없음)');
-      finalCandidates = demodayCandidates;
+      finalCandidates = localCandidates;
     }
 
-    // 득표순으로 정렬 (내림차순)
     const sorted = [...finalCandidates].sort((a, b) => b.votes - a.votes);
     setCandidates(sorted);
-  }, [apiCandidates]);
+  }, [pageTitle, apiCandidates]);
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--color-main-extra-light)] px-6 py-12">
@@ -64,15 +76,15 @@ export default function DemoDayStep3Page() {
 
         <div className="flex w-full flex-col items-center gap-6">
           <div className="flex w-full items-center justify-center">
-            <p className="text-headline-01">데모데이 결과</p>
+            <p className="text-headline-01">{pageTitle}</p>
           </div>
 
           <div className="h-[3px] w-full bg-black" />
 
-          <div className="grid w-full grid-cols-1 gap-4">
+          <div className="grid w-full grid-cols-2 gap-4">
             {candidates.map((candidate, index) => (
               <ResultBox
-                key={candidate.team}
+                key={`${candidate.team}-${candidate.name}`}
                 rank={index + 1}
                 name={candidate.name}
                 team={candidate.team}
