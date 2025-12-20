@@ -41,7 +41,7 @@ export default function PartVoteBody() {
       </Link>
 
       <Link
-        href={'/partVote/beVote'}
+        href={'/part/beVote'}
         className={'flex mt-[32px] w-[300px] h-[165px] bg-white border-[4px] border-black justify-end items-center'}
       >
         <div className="flex flex-col font-bold text-[20px] text-black ml-[17px] mb-[10px] mr-auto ">
