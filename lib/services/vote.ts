@@ -65,10 +65,6 @@ export async function getLeaderResults(
 }
 
 
-
-
-
-
 //득표수 정렬
 export function sortByVotesDesc(list: candidateResponse[]): candidateResponse[] {
   return [...list].sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0));

@@ -66,6 +66,7 @@ export default function LeaderResultsPage() {
             candidates={candidates}
             selectedId={null}
             onSelect={() => {}}
+            showVotes={true}
           />
         )}
         <BackButton />
