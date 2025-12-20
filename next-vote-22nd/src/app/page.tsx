@@ -1,14 +1,14 @@
 // app/page.tsx
-"use client";
+'use client';
 
-import { SplashWrapper } from "./splash";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { SplashWrapper } from './splash';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 
 function HomeContent() {
   const searchParams = useSearchParams();
-  const skipSplash = searchParams.get("skipSplash") === "true";
+  const skipSplash = searchParams.get('skipSplash') === 'true';
 
   const content = (
     <div className="relative w-full h-full">
@@ -20,7 +20,7 @@ function HomeContent() {
 
       <div
         className="absolute top-[249px] left-[174px] w-[177px] h-[124px] flex items-center justify-center text-[51px] font-bold text-[var(--color-black)]"
-        style={{ textShadow: "2px 3px 4px rgba(0, 0, 0, 0.25)" }}
+        style={{ textShadow: '2px 3px 4px rgba(0, 0, 0, 0.25)' }}
       >
         <span className="text-center leading-none">
           CEOS

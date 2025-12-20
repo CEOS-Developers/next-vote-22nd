@@ -2,7 +2,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { MouseEvent } from "react";
+import { useEffect, useState, MouseEvent } from "react";
+import { useLogout } from "@/features/auth/hooks/use-auth";
+import { useAuthStore } from "@/features/auth/stores/auth-store";
 
 interface LogoutModalProps {
   isOpen: boolean;
@@ -11,6 +13,27 @@ interface LogoutModalProps {
 
 export default function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
   const router = useRouter();
+  const [userId, setUserId] = useState("");
+
+  // API Hook 사용
+  const logoutMutation = useLogout();
+  const authUserId = useAuthStore(
+    (state: { userId: string | null }) => state.userId
+  );
+
+  // 모달이 열릴 때 userId 읽기
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Zustand store에서 먼저 확인
+    if (authUserId) {
+      setUserId(authUserId);
+    } else if (typeof window !== "undefined") {
+      // localStorage에서 fallback
+      const stored = localStorage.getItem("userId");
+      if (stored) setUserId(stored);
+    }
+  }, [isOpen, authUserId]);
 
   if (!isOpen) return null;
 
@@ -29,11 +52,19 @@ export default function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
   };
 
   const handleLogout = () => {
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("userId");
+    const refreshToken =
+      typeof window !== "undefined"
+        ? sessionStorage.getItem("refreshToken")
+        : null;
+
+    if (refreshToken) {
+      logoutMutation.mutate(refreshToken);
+    } else {
+      // refreshToken이 없어도 로그아웃 처리
+      useAuthStore.getState().logout();
+      router.push("/login");
     }
     onClose();
-    router.push("/login"); // 로그인 화면으로 이동
   };
 
   return (
@@ -64,9 +95,10 @@ export default function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
         <button
           type="button"
           onClick={handleLogout}
-          className="mx-auto flex h-[44px] w-[140px] items-center justify-center rounded-full border border-[var(--color-black)] bg-[var(--color-white)] text-[16px] font-medium hover:bg-[var(--color-gray-50)]"
+          disabled={logoutMutation.isPending}
+          className="mx-auto flex h-[44px] w-[140px] items-center justify-center rounded-full border border-[var(--color-black)] bg-[var(--color-white)] text-[16px] font-medium hover:bg-[var(--color-gray-50)] disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Logout
+          {logoutMutation.isPending ? "로그아웃 중..." : "Logout"}
         </button>
       </div>
     </div>

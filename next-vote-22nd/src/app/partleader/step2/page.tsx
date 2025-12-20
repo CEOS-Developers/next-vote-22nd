@@ -1,14 +1,11 @@
+// src/app/partleader/step2/page.tsx
 import { Suspense } from "react";
-import PartLeaderStep2Client from "./step2Client";
+import Step2Client from "./Step2Client";
 
 export default function PartLeaderStep2Page() {
   return (
-    <Suspense
-      fallback={
-        <div className="min-h-screen bg-[var(--color-main-extra-light)]" />
-      }
-    >
-      <PartLeaderStep2Client />
+    <Suspense fallback={null}>
+      <Step2Client />
     </Suspense>
   );
 }
