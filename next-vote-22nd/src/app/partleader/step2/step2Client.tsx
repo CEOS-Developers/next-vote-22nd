@@ -72,7 +72,7 @@ export default function PartLeaderStep2Client() {
           </div>
 
           <div className="h-[3px] w-full bg-black" />
-          <div className="grid w-full grid-cols-2 gap-4">
+          <div className="grid w-full grid-cols-2 gap-6">
             {candidates.map((candidate, index) => (
               <SmallBox
                 key={`${candidate.team}-${candidate.name}`}

@@ -2,7 +2,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState, MouseEvent } from "react";
+import { MouseEvent } from "react";
 
 interface LogoutModalProps {
   isOpen: boolean;
@@ -11,20 +11,15 @@ interface LogoutModalProps {
 
 export default function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
   const router = useRouter();
-  const [userId, setUserId] = useState("");
-
-  // 모달이 열릴 때 localStorage에서 id 읽기
-  useEffect(() => {
-    if (!isOpen) return;
-    if (typeof window === "undefined") return;
-
-    const stored = localStorage.getItem("userId");
-    if (stored) setUserId(stored);
-  }, [isOpen]);
 
   if (!isOpen) return null;
 
-  const handleBackdropClick = () => {
+  // 모달이 열릴 때 localStorage에서 id 읽기
+  const userId =
+    typeof window !== "undefined" ? localStorage.getItem("userId") ?? "" : "";
+
+  const handleBackdropClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return; // 카드/내부 클릭이면 무시
     onClose();
   };
 
@@ -38,7 +33,7 @@ export default function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
       localStorage.removeItem("userId");
     }
     onClose();
-    router.push("/login"); // 가장 처음 화면으로 이동
+    router.push("/login"); // 로그인 화면으로 이동
   };
 
   return (
@@ -48,9 +43,20 @@ export default function LogoutModal({ isOpen, onClose }: LogoutModalProps) {
     >
       {/* 핑크 박스 */}
       <div
-        className="w-[280px] rounded-[24px] bg-[var(--color-main-light)] px-8 py-10 shadow-[0_8px_16px_rgba(0,0,0,0.25)]"
+        className="relative w-[280px] rounded-[16px] bg-[var(--color-main-light)] px-8 py-10 border-2 shadow-[0_8px_16px_rgba(0,0,0,0.25)]"
         onClick={handleCardClick}
       >
+        <button
+          type="button"
+          aria-label="Close"
+          onClick={(e) => {
+            e.stopPropagation(); // 카드 클릭(버블) 방지
+            onClose();
+          }}
+          className="absolute right-0 top-0 flex h-8 w-8 items-center justify-center rounded-full text-[20px] leading-none text-[var(--color-black)] hover:bg-black/10"
+        >
+          ×
+        </button>
         <p className="mb-8 text-center text-[18px] font-semibold text-[var(--color-black)]">
           {userId || "User"}
         </p>

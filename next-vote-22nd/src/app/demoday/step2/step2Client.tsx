@@ -56,14 +56,20 @@ export default function DemoDayStep2Client() {
         </div>
 
         <div className="flex w-full flex-col items-center gap-6">
-          <Link
-            href="/demoday/step1"
-            aria-label="이전 단계로 이동"
-            className="self-start text-3xl text-black transition-colors hover:text-[var(--color-main)]"
-          >
-            ←
-          </Link>
-          <p className="text-headline-01">{pageTitle}</p>
+          <div className="flex w-full items-center gap-12">
+            <Link
+              href={{
+                pathname: "/demoday/step2",
+                query: { title: pageTitle },
+              }}
+              aria-label="이전 단계로 이동"
+              className="text-3xl text-black transition-colors hover:text-[var(--color-main)]"
+            >
+              ←
+            </Link>
+            <p className="text-headline-01">{pageTitle}</p>
+          </div>
+
           <div className="h-[3px] w-full bg-black" />
 
           <div className="grid w-full grid-cols gap-4">
@@ -77,17 +83,16 @@ export default function DemoDayStep2Client() {
           </div>
         </div>
 
-        <button
-          type="button"
-          disabled={!hasSelection}
-          className={`mt-auto w-full rounded-full border-2 border-black px-6 py-3 text-base font-semibold transition-colors ${
+        <Link
+          href={{ pathname: `/demoday/step3`, query: { title: pageTitle } }}
+          className={`mt-auto flex w-full items-center justify-center rounded-full border-2 border-black px-6 py-3 text-base font-semibold transition-colors ${
             hasSelection
               ? "bg-[var(--color-main-light)] hover:bg-[var(--color-main)]"
-              : "cursor-not-allowed bg-[var(--color-gray-200)] text-[var(--color-gray-600)]"
+              : "pointer-events-none cursor-not-allowed bg-[var(--color-gray-200)] text-[var(--color-gray-600)]"
           }`}
         >
           제출하기
-        </button>
+        </Link>
       </div>
     </main>
   );

@@ -13,5 +13,5 @@ export const partleaderCandidates: PartleaderCandidate[] = [
   { team: "Modelly", name: "손주완" },
   { team: "Modelly", name: "정윤지" },
   { team: "GroomEasy", name: "신용섭" },
-  { team: "GroomEasy", name: "최무현" },
+  { team: "GroomEasy", name: "최무헌" },
 ];

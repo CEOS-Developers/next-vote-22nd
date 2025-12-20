@@ -25,11 +25,11 @@ const ResultBox = ({ name, team, votes, isSelected }: ResultBoxProps) => {
       {/* 오른쪽에 겹치는 동그라미 */}
       <div
         className="
-          absolute top-1/2 -right-5
+          absolute -bottom-6 -right-5
           flex h-10 w-10 -translate-y-1/2
           items-center justify-center
           rounded-full border-2 border-black bg-white
-          text-base font-bold
+          text-body-01
         "
       >
         {votes}
