@@ -13,19 +13,39 @@ export const apiClient = axios.create({
   timeout: 10000,
 });
 
-// Request Interceptor: AccessToken 자동 첨부
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = useAuthStore.getState().accessToken;
+    // 1) store 토큰 우선
+    const storeToken = useAuthStore.getState().accessToken;
+
+    // 2) store에 없으면 sessionStorage fallback (클라이언트에서만)
+    const sessionToken =
+      typeof window !== 'undefined'
+        ? sessionStorage.getItem('accessToken')
+        : null;
+
+    const token = storeToken || sessionToken;
+
+    console.log('🔍 Request URL:', config.url);
+    console.log('🔍 Current Token from Store:', storeToken);
+    console.log('🔍 Current Token from Session:', sessionToken);
+
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
+      console.log(
+        '✅ Authorization Header Added:',
+        config.headers.Authorization
+      );
+    } else {
+      console.warn('⚠️ No token available or headers missing');
     }
+
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor: 토큰 갱신 및 에러 처리
+// Response interceptor는 그대로
 apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
@@ -33,7 +53,6 @@ apiClient.interceptors.response.use(
       _retry?: boolean;
     };
 
-    // 401 에러이고 재시도하지 않은 요청인 경우
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
@@ -43,27 +62,24 @@ apiClient.interceptors.response.use(
           throw new Error('No refresh token available');
         }
 
-        // 토큰 갱신 요청
         const response = await axios.post(
           `${API_BASE_URL}/api/v1/auth/refresh_token`,
-          {
-            refreshToken,
-          }
+          { refreshToken }
         );
 
         const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-        // 새 토큰 저장
         useAuthStore.getState().setTokens(accessToken, newRefreshToken);
+
+        // ✅ 여기에도 accessToken 저장 추가 (중요)
+        sessionStorage.setItem('accessToken', accessToken);
         sessionStorage.setItem('refreshToken', newRefreshToken);
 
-        // 원래 요청 재시도
         if (originalRequest.headers) {
           originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         }
         return apiClient(originalRequest);
       } catch (refreshError) {
-        // 토큰 갱신 실패 시 로그아웃 처리
         useAuthStore.getState().logout();
         if (typeof window !== 'undefined') {
           window.location.href = '/login';

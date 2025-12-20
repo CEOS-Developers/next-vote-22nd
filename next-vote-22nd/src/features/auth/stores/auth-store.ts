@@ -10,14 +10,20 @@ interface AuthState {
   isAuthenticated: () => boolean;
 }
 
+// ✅ store 초기 accessToken을 sessionStorage에서 복구
+const initialAccessToken =
+  typeof window !== 'undefined' ? sessionStorage.getItem('accessToken') : null;
+
 export const useAuthStore = create<AuthState>((set, get) => ({
-  accessToken: null,
+  accessToken: initialAccessToken,
   userId: null,
 
   setTokens: (accessToken: string, refreshToken: string) => {
     set({ accessToken });
-    // RefreshToken은 sessionStorage에 저장
+
+    // ✅ AccessToken / RefreshToken 둘 다 sessionStorage에 저장
     if (typeof window !== 'undefined') {
+      sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('refreshToken', refreshToken);
     }
   },
@@ -32,6 +38,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   logout: () => {
     set({ accessToken: null, userId: null });
     if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('accessToken');
       sessionStorage.removeItem('refreshToken');
       localStorage.removeItem('userId');
     }

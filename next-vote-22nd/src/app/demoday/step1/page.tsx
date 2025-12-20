@@ -1,5 +1,8 @@
 // src/app/demoday/step1/page.tsx
+'use client';
+
 import LargeBox from '@/components/box/LargeBox';
+import Link from 'next/link';
 
 const steps = [1, 2, 3];
 const currentStep = 1;
@@ -24,7 +27,14 @@ export default function DemoDayStep1Page() {
         </div>
 
         <div className="flex w-full flex-col items-center gap-6">
-          <div className="flex w-full items-center justify-center">
+          <div className="flex w-full items-center gap-12">
+            <Link
+              href="/electionSelect"
+              aria-label="이전으로 이동"
+              className="text-3xl text-black transition-colors hover:text-[var(--color-main)]"
+            >
+              ←
+            </Link>
             <p className="text-headline-01">데모데이 투표</p>
           </div>
 

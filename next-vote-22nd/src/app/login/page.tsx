@@ -5,6 +5,7 @@ import { useState, FormEvent, ChangeEvent } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useLogin } from '@/features/auth/hooks/use-auth';
+import { useAuthStore } from '@/features/auth/stores/auth-store';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -15,8 +16,8 @@ export default function LoginPage() {
     password: '',
   });
 
-  // API Hook 사용
   const loginMutation = useLogin();
+  const setTokens = useAuthStore((state) => state.setTokens); // ✅ setTokens (복수형)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -32,7 +33,15 @@ export default function LoginPage() {
         password: formData.password,
       },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          console.log('✅ 로그인 성공:', data);
+
+          // ✅ accessToken과 refreshToken 모두 저장
+          if (data.accessToken) {
+            setTokens(data.accessToken, data.refreshToken);
+            console.log('✅ 토큰 저장 완료');
+          }
+
           setUserName(formData.id);
           setShowWelcome(true);
         },
@@ -53,7 +62,6 @@ export default function LoginPage() {
           style={{ width: 393, height: 852 }}
         >
           <div className="relative w-full h-full">
-            {/* Vote Icon */}
             <img
               src="/icons/main/vote.svg"
               alt="Vote icon"
@@ -63,8 +71,6 @@ export default function LoginPage() {
                   'brightness(0) saturate(100%) invert(65%) sepia(0%) saturate(0%) hue-rotate(202deg) brightness(96%) contrast(92%)',
               }}
             />
-
-            {/* Welcome + Name - 왼쪽 정렬 */}
             <div
               className="absolute top-[249px] left-[56px] flex items-center justify-start text-[51px] font-bold text-[var(--color-black)]"
               style={{ textShadow: '2px 3px 4px rgba(0, 0, 0, 0.25)' }}
@@ -75,8 +81,6 @@ export default function LoginPage() {
                 {userName}
               </span>
             </div>
-
-            {/* Start Button */}
             <div className="absolute left-1/2 -translate-x-1/2 bottom-[80px]">
               <button
                 onClick={handleStart}
@@ -115,7 +119,6 @@ export default function LoginPage() {
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-            {/* 에러 메시지 */}
             {loginMutation.isError && (
               <div className="px-4 py-3 rounded bg-red-100 border border-red-400 text-red-700 text-sm">
                 {(loginMutation.error as any)?.response?.data?.message ||

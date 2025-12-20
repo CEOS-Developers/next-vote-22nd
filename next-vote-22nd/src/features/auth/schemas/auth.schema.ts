@@ -21,10 +21,35 @@ export const signupSchema = z.object({
 
 export type SignupInput = z.infer<typeof signupSchema>;
 
-// 로그인 응답 스키마
-export const loginResponseSchema = z.object({
+// 백엔드 공통 응답 래퍼 스키마
+export const apiResponseSchema = <T extends z.ZodTypeAny>(dataSchema: T) =>
+  z.object({
+    isSuccess: z.boolean(),
+    code: z.string(),
+    message: z.string(),
+    result: dataSchema,
+    timestamp: z.string(),
+  });
+
+// 로그인 결과 데이터 스키마
+export const loginResultSchema = z.object({
   accessToken: z.string(),
   refreshToken: z.string(),
 });
 
-export type LoginResponse = z.infer<typeof loginResponseSchema>;
+// 로그인 전체 응답 스키마
+export const loginResponseSchema = apiResponseSchema(loginResultSchema);
+
+export type LoginResponse = z.infer<typeof loginResultSchema>;
+
+// 회원가입 결과 데이터 스키마
+export const signupResultSchema = z.object({
+  userId: z.number(),
+  loginId: z.string(),
+  name: z.string(),
+});
+
+// 회원가입 전체 응답 스키마
+export const signupResponseSchema = apiResponseSchema(signupResultSchema);
+
+export type SignupResponse = z.infer<typeof signupResultSchema>;

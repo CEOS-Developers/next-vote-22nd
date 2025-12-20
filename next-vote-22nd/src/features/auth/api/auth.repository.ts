@@ -4,7 +4,9 @@ import {
   LoginInput,
   SignupInput,
   LoginResponse,
+  SignupResponse,
   loginResponseSchema,
+  signupResponseSchema,
 } from '../schemas/auth.schema';
 
 export const authRepository = {
@@ -12,36 +14,25 @@ export const authRepository = {
   async login(data: LoginInput): Promise<LoginResponse> {
     const response = await apiClient.post('/api/v1/auth/user/login', data);
 
-    // 🔍 디버깅: 실제 응답 데이터 확인
-    console.log('🔍 Login Response Data:', response.data);
+    // 🔍 디버깅: 실제 응답 확인
+    console.log('🔍 Login API Response:', response);
+    console.log('🔍 Response Data:', response.data);
+    console.log('🔍 Response Data Type:', typeof response.data);
 
-    // 백엔드 응답 구조: { isSuccess, code, message, result, timestamp }
-    const { result } = response.data;
-
-    if (!result) {
-      console.error('🔴 No result in response:', response.data);
-      throw new Error('Invalid login response format');
-    }
-
-    const loginData: LoginResponse = {
-      accessToken: result.accessToken,
-      refreshToken: result.refreshToken,
-    };
-
-    console.log('✅ Extracted Login Data:', loginData);
-
-    if (!loginData.accessToken || !loginData.refreshToken) {
-      console.error('🔴 Missing tokens:', loginData);
-      throw new Error('Missing tokens in login response');
-    }
-
-    return loginData;
+    // 백엔드 응답 검증 및 result 추출
+    const validatedResponse = loginResponseSchema.parse(response.data);
+    return validatedResponse.result;
   },
 
   // 회원가입
-  async signup(data: SignupInput): Promise<string> {
+  async signup(data: SignupInput): Promise<SignupResponse> {
     const response = await apiClient.post('/api/v1/auth/user/signup', data);
-    return response.data?.message || 'Signup successful';
+
+    console.log('🔍 Signup API Response:', response.data);
+
+    // 백엔드 응답 검증 및 result 추출
+    const validatedResponse = signupResponseSchema.parse(response.data);
+    return validatedResponse.result;
   },
 
   // 로그아웃
@@ -49,6 +40,8 @@ export const authRepository = {
     const response = await apiClient.post('/api/v1/auth/user/logout', {
       refreshToken,
     });
+
+    // 로그아웃은 단순 메시지 반환
     return response.data?.message || 'Logout successful';
   },
 
@@ -58,29 +51,20 @@ export const authRepository = {
       refreshToken,
     });
 
-    console.log('🔍 Refresh Token Response:', response.data);
-
-    const { result } = response.data;
-
-    const tokenData: LoginResponse = {
-      accessToken: result.accessToken,
-      refreshToken: result.refreshToken,
-    };
-
-    return tokenData;
+    // 백엔드 응답 검증 및 result 추출
+    const validatedResponse = loginResponseSchema.parse(response.data);
+    return validatedResponse.result;
   },
 
   // 팀 목록 조회
   async getTeams(): Promise<string[]> {
     const response = await apiClient.get('/api/v1/auth/user/team');
-    // result가 배열이면 그대로, 아니면 response.data
     return response.data?.result || response.data;
   },
 
   // 파트 목록 조회
   async getParts(): Promise<string[]> {
     const response = await apiClient.get('/api/v1/auth/user/part');
-    // result가 배열이면 그대로, 아니면 response.data
     return response.data?.result || response.data;
   },
 };
