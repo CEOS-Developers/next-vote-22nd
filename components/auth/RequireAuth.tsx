@@ -1,20 +1,21 @@
 'use client';
 
+import { useAuth } from '@/auth/authStore';
 import { useRouter } from 'next/navigation';
-import { useIsAuthed } from '@/auth/authStore';
 import { useEffect } from 'react';
 
 export default function RequireAuth({ children }: { children: React.ReactNode }) {
-  const isAuthed = useIsAuthed();
+  const accessToken = useAuth((s) => s.accessToken);
+  const hydrated = useAuth((s) => s.hydrated);
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthed) {
+    if (hydrated && !accessToken) {
       router.replace('/');
     }
-  }, [isAuthed]);
-
-  if (!isAuthed) return null;
+  }, [hydrated, accessToken]);
+  if (!hydrated) return null;
+  if (!accessToken) return null;
 
   return <>{children}</>;
 }
