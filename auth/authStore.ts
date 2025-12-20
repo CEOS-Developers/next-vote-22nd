@@ -6,6 +6,7 @@ import type { User } from '@/types/vote';
 type AuthState = {
   accessToken: string | null;
   user: User | null;
+  hydrated: boolean;
 
   login: (token: string, user: User) => void;
   logout: () => void;
@@ -17,6 +18,7 @@ export const useAuth = create<AuthState>()(
     (set, get) => ({
       accessToken: null,
       user: null,
+      hydrated: false,
 
       login: (token, user) => set({ accessToken: token, user }),
       logout: () => set({ accessToken: null, user: null }),
@@ -25,6 +27,11 @@ export const useAuth = create<AuthState>()(
     {
       name: 'accessToken',
       partialize: (s) => ({ accessToken: s.accessToken }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state.hydrated = true;
+        }
+      },
     },
   ),
 );

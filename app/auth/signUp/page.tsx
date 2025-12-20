@@ -75,7 +75,7 @@ export default function SignUp() {
     } catch (error) {
       console.log(error);
     }
-    router.push('/');
+    router.push('/select');
   };
   return (
     <div className="relative w-full h-screen flex flex-col items-center justify-center">

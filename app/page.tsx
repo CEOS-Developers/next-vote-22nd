@@ -1,13 +1,13 @@
 'use client';
 
-import { useAuth, useIsAuthed } from '@/auth/authStore';
+import { useAuth } from '@/auth/authStore';
 import BlackButton from '@/components/BlackButton';
 import { authService } from '@/services/authService';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const isLogin = useIsAuthed();
+  const isLogin = useAuth((s) => s.hydrated && !!s.accessToken);
   const router = useRouter();
   const handleLogout = async () => {
     try {
