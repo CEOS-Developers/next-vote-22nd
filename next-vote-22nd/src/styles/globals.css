@@ -1,0 +1,86 @@
+/* src/styles/globals.css */
+
+@import "tailwindcss";
+
+/* ---------------------------------------------------
+   Color 
+--------------------------------------------------- */
+
+:root {
+  --background: #ffeef6;
+  --foreground: #000000;
+}
+
+@theme {
+  --color-black: #000a19;
+  --color-white: #ffffff;
+  /*-------- main color ---------*/
+  --color-main: #ff4093;
+  --color-main-light: #fdbcd9;
+  --color-main-extra-light: #ffeef6;
+  --color-main-dark: #d8016f;
+  /*-------- gray scale ---------*/
+  --color-gray-50: #f8f7f7;
+  --color-gray-100: #eeeded;
+  --color-gray-200: #e1e0e0;
+  --color-gray-300: #cecded;
+  --color-gray-400: #a9a8a8;
+  --color-gray-500: #888787;
+  --color-gray-600: #616060;
+  --color-gray-700: #4e4d4d;
+  --color-gray-800: #302f2f;
+  --color-gray-900: #100f0f;
+  /*------ 폰트 -------*/
+  --font-sans: InterVariable, sans-serif;
+  --font-sans--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+@layer components {
+  .frame-iphone-16 {
+    aspect-ratio: 9 / 19.5;
+    width: 100%;
+    max-width: 20rem;
+    border-radius: 48px;
+    background-color: var(--color-white);
+    box-shadow: 8px 8px 16px var(--color-gray-400);
+  }
+}
+
+@media (min-width: 640px) {
+  .frame-iphone-16 {
+    max-width: 24rem; /* 384px */
+  }
+}
+
+.text-headline-01 {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.text-headline-02 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 20px;
+  text-align: center;
+}
+
+.text-body-01 {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: center;
+}
+
+.text-body-02 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 140%;
+  text-align: center;
+}
