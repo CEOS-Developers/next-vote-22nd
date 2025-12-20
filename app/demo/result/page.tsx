@@ -4,16 +4,14 @@ import { useEffect, useState } from 'react';
 
 import DemoCandidateList from '@/components/demoVote/DemoCandidateList';
 import VoteHeader from '@/components/vote/VoteHeader';
-import SubmitButton from '@/components/SubmitButton';
-import RequireAuth from '@/components/auth/RequireAuth';
+import BackButton from '@/components/result/BackButton';
 
 import type { teamResponse } from '@/types/teamVote';
-import { getTeams } from '@/lib/services/teamVote';
+import { getTeamResults } from '@/lib/services/teamVote';
 import { getAccessToken } from '@/lib/api/token';
 
-export default function DemoDayVotePage() {
+export default function DemoDayResultPage() {
   const [candidates, setCandidates] = useState<teamResponse[]>([]);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -24,15 +22,17 @@ export default function DemoDayVotePage() {
         setError(null);
 
         const token = getAccessToken();
-        const list = await getTeams(token);
+        const list = await getTeamResults(token);
 
-        setCandidates(list);
+        // 듣표수 내림차순 정렬
+        const sorted = [...list].sort(
+          (a, b) => (b.votes ?? 0) - (a.votes ?? 0)
+        );
+
+        setCandidates(sorted);
       } catch (e: unknown) {
-        if (e instanceof Error) {
-          setError(e.message);
-        } else {
-          setError('Failed to load teams');
-        }
+        if (e instanceof Error) setError(e.message);
+        else setError('Failed to load results');
       } finally {
         setLoading(false);
       }
@@ -44,22 +44,19 @@ export default function DemoDayVotePage() {
   return (
     <main className="relative w-full h-screen w-[375px] flex flex-col bg-[#FFD954]">
       <section className="flex flex-1 flex-col items-center">
-        <VoteHeader title={'데모데이 투표'} blackDot={2} backBtn={true} />
-        <RequireAuth>
-           {loading && <div className="mt-6">loading...</div>}
+        <VoteHeader title={'데모데이 투표 결과'} blackDot={3} backBtn={true} />
+
+        {loading && <div className="mt-6">loading...</div>}
         {error && <div className="mt-6">error: {error}</div>}
 
         {!loading && !error && (
           <DemoCandidateList
             candidates={candidates}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
+            selectedId={null}
+            onSelect={() => {}}
           />
         )}
-
-        <SubmitButton selectedId={selectedId} position="member" />
-        </RequireAuth>
-
+        <BackButton />
       </section>
     </main>
   );

@@ -4,12 +4,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import checkIcon from '@/public/icons/check.svg';
 
+import { useRouter } from 'next/navigation';
+
 export default function PartVoteBody() {
   //각 버튼 하니씩
   const [checked1, setChecked1] = useState(false);
   const [checked2, setChecked2] = useState(false);
   const [checked3, setChecked3] = useState(false);
   const [checked4, setChecked4] = useState(false);
+  const router = useRouter();
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -29,14 +32,19 @@ export default function PartVoteBody() {
           >
             {checked1 && <Image src={checkIcon} alt="checked" width={30} height={30} className="ml-[2px] mt-[2px]" />}
           </div>
-          <div
+          <button
             className={`w-[62px] h-[26px] bg-gray-200 border-[1px] border-black rounded-full
                      ${checked3 ? 'bg-yellow-300' : 'bg-gray-200 hover:bg-yellow-300'} text-[12px] text-black font-black 
                      mt-[25px] mb-[12px] flex items-center justify-center`}
-            onClick={() => setChecked3(!checked3)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setChecked4(!checked4);
+              router.push('/demo/result');
+            }}
           >
             결과보기
-          </div>
+          </button>
         </div>
       </Link>
 
@@ -56,14 +64,19 @@ export default function PartVoteBody() {
           >
             {checked2 && <Image src={checkIcon} alt="checked" width={30} height={30} className="ml-[2px] mt-[2px]" />}
           </div>
-          <div
+          <button
             className={`w-[62px] h-[26px] bg-gray-200 border-[1px] border-black rounded-full
                      ${checked4 ? 'bg-yellow-300' : 'bg-gray-200 hover:bg-yellow-300'} text-[12px] text-black font-black 
                      mt-[25px] mb-[12px] flex items-center justify-center`}
-            onClick={() => setChecked4(!checked4)}
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              setChecked4(!checked4);
+              router.push('/part/result');
+            }}
           >
             결과보기
-          </div>
+          </button>
         </div>
       </Link>
     </div>

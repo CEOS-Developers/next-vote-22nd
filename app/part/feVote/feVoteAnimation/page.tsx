@@ -9,8 +9,9 @@ export default function Vote() {
     <main className="relative w-full h-screen  w-[375px] flex flex-col bg-[#FFD954]">
       <section className="flex flex-1 flex-col items-center">
         <VoteHeader title={'FE 파트장 투표'} blackDot={2} backBtn={false} />
+
         <RequireAuth>
-          <VoteAnimation />
+          <VoteAnimation resultHref="/part/result"/>
         </RequireAuth>
       </section>
     </main>
