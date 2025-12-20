@@ -1,33 +1,35 @@
-"use client";
+// src/app/partleader/step2/page.tsx
+'use client';
 
-import Link from "next/link";
-import SmallBox from "@/components/box/SmallBox";
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import Link from 'next/link';
+import SmallBox from '@/components/box/SmallBox';
+import { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
+  feCandidates,
+  beCandidates,
   PartleaderCandidate,
-  partleaderCandidates,
-} from "@/data/partleaderCandidates";
+} from '@/data/partleaderCandidates';
 
 const steps = [1, 2, 3];
 const currentStep = 2;
 
-interface Candidate extends PartleaderCandidate {
+interface CandidateWithSelection extends PartleaderCandidate {
   isSelect: boolean;
 }
 
-const buildInitialCandidates = (): Candidate[] =>
-  partleaderCandidates.map((candidate) => ({
-    ...candidate,
-    isSelect: false,
-  }));
-
 export default function PartLeaderStep2Page() {
   const searchParams = useSearchParams();
-  const pageTitle = searchParams.get("title") ?? "FE 파트장 투표";
-  const [candidates, setCandidates] = useState<Candidate[]>(
-    buildInitialCandidates()
-  );
+  const pageTitle = searchParams.get('title') ?? 'FE 파트장 투표';
+
+  const [candidates, setCandidates] = useState<CandidateWithSelection[]>([]);
+
+  useEffect(() => {
+    const isFE = pageTitle.includes('FE');
+    const candidateList = isFE ? feCandidates : beCandidates;
+
+    setCandidates(candidateList.map((c) => ({ ...c, isSelect: false })));
+  }, [pageTitle]);
 
   const handleSelect = (index: number) => {
     setCandidates((prev) =>
@@ -37,6 +39,16 @@ export default function PartLeaderStep2Page() {
           : { ...candidate, isSelect: false }
       )
     );
+  };
+
+  const handleSubmit = () => {
+    const selectedCandidate = candidates.find((c) => c.isSelect);
+    if (!selectedCandidate) return;
+
+    alert(`${selectedCandidate.name}님에게 투표했습니다!`);
+    window.location.href = `/partleader/step3?title=${encodeURIComponent(
+      pageTitle.replace('투표', '투표 결과')
+    )}`;
   };
 
   const hasSelection = candidates.some((candidate) => candidate.isSelect);
@@ -50,8 +62,8 @@ export default function PartLeaderStep2Page() {
               key={step}
               className={`flex h-8 w-8 items-center justify-center rounded-full border-2 border-black text-label-01 ${
                 step === currentStep
-                  ? "bg-black text-white"
-                  : "bg-white text-black"
+                  ? 'bg-black text-white'
+                  : 'bg-white text-black'
               }`}
             >
               {step}
@@ -63,7 +75,7 @@ export default function PartLeaderStep2Page() {
           <div className="flex w-full items-center gap-12">
             <Link
               href="/partleader/step1"
-              aria-label="이전 단계로 이동"
+              aria-label="이전으로 이동"
               className="text-3xl text-black transition-colors hover:text-[var(--color-main)]"
             >
               ←
@@ -72,27 +84,32 @@ export default function PartLeaderStep2Page() {
           </div>
 
           <div className="h-[3px] w-full bg-black" />
+
           <div className="grid w-full grid-cols-2 gap-4">
             {candidates.map((candidate, index) => (
               <SmallBox
                 key={`${candidate.team}-${candidate.name}`}
-                {...candidate}
+                name={candidate.name}
+                team={candidate.team}
+                isSelect={candidate.isSelect}
                 onClick={() => handleSelect(index)}
               />
             ))}
           </div>
         </div>
 
-        <Link
-          href={{ pathname: `/partleader/step3`, query: { title: pageTitle } }}
-          className={`mt-auto flex w-full items-center justify-center rounded-full border-2 border-black px-6 py-3 text-base font-semibold transition-colors ${
+        <button
+          type="button"
+          onClick={handleSubmit}
+          disabled={!hasSelection}
+          className={`mt-auto w-full rounded-full border-2 border-black px-6 py-3 text-base font-semibold transition-colors ${
             hasSelection
-              ? "bg-[var(--color-main-light)] hover:bg-[var(--color-main)]"
-              : "pointer-events-none cursor-not-allowed bg-[var(--color-gray-200)] text-[var(--color-gray-600)]"
+              ? 'bg-[var(--color-main-light)] hover:bg-[var(--color-main)] cursor-pointer'
+              : 'cursor-not-allowed bg-[var(--color-gray-200)] text-[var(--color-gray-600)]'
           }`}
         >
           제출하기
-        </Link>
+        </button>
       </div>
     </main>
   );
