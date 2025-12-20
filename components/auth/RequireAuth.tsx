@@ -13,7 +13,7 @@ export default function RequireAuth({ children }: { children: React.ReactNode })
     if (hydrated && !accessToken) {
       router.replace('/');
     }
-  }, [hydrated, accessToken]);
+  }, [hydrated, accessToken, router]);
   if (!hydrated) return null;
   if (!accessToken) return null;
 
