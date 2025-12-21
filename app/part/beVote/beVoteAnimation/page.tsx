@@ -11,7 +11,7 @@ export default function BeVoteAnimation() {
         <VoteHeader title={'BE 파트장 투표'} blackDot={2} backBtn={false} />
 
         <RequireAuth>
-           <VoteAnimation resultHref="/part/result"/>
+          <VoteAnimation resultHref="/part/result?part=BACKEND" />
         </RequireAuth>
 
       </section>

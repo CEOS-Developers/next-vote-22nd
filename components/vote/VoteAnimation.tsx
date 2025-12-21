@@ -7,7 +7,7 @@ import Box from '@/public/icons/box';
 import Link from 'next/link';
 
 type Props = {
-  resultHref: '/part/result' | '/demo/result';
+  resultHref: string;
 };
 
 export default function VoteAnimation({ resultHref }: Props) {
@@ -32,7 +32,6 @@ export default function VoteAnimation({ resultHref }: Props) {
         <span className="flex justify-center mt-[10px] text-black text-[16px] font-bold">결과보기</span>
       </Link>
 
-      {/* 애니메이션 정의 */}
       <style jsx global>{`
         @keyframes ballotDrop {
           0% {
