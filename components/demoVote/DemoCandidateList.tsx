@@ -1,4 +1,4 @@
-// components/demoCandidateList.tsx
+
 'use client';
 
 import type { teamResponse } from '@/types/teamVote';
@@ -8,9 +8,10 @@ type Props = {
   candidates: teamResponse[];
   selectedId: string | null;
   onSelect: (id: string) => void;
+  showVotes?: boolean;
 };
 
-export default function DemoCandidateList({ candidates, selectedId, onSelect }: Props) {
+export default function DemoCandidateList({ candidates, selectedId, onSelect, showVotes = false }: Props) {
   return (
     <div className="w-full flex flex-col items-center gap-[25px] mt-[30px] px-[16px]">
       {candidates.map((candidate) => (
@@ -19,6 +20,7 @@ export default function DemoCandidateList({ candidates, selectedId, onSelect }: 
           candidate={candidate}
           selected={candidate.id === selectedId}
           onSelect={() => onSelect(candidate.id)}
+          showVotes={showVotes}
         />
       ))}
     </div>

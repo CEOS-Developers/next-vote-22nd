@@ -54,6 +54,7 @@ export default function DemoDayResultPage() {
             candidates={candidates}
             selectedId={null}
             onSelect={() => {}}
+            showVotes={true}
           />
         )}
         <BackButton />
