@@ -1,0 +1,28 @@
+
+'use client';
+
+import type { teamResponse } from '@/types/teamVote';
+import DemoCandidateCard from '@/components/demoVote/DemoCandidateCard';
+
+type Props = {
+  candidates: teamResponse[];
+  selectedId: string | null;
+  onSelect: (id: string) => void;
+  showVotes?: boolean;
+};
+
+export default function DemoCandidateList({ candidates, selectedId, onSelect, showVotes = false }: Props) {
+  return (
+    <div className="w-full flex flex-col items-center gap-[25px] mt-[30px] px-[16px]">
+      {candidates.map((candidate) => (
+        <DemoCandidateCard
+          key={candidate.id}
+          candidate={candidate}
+          selected={candidate.id === selectedId}
+          onSelect={() => onSelect(candidate.id)}
+          showVotes={showVotes}
+        />
+      ))}
+    </div>
+  );
+}
